@@ -1,7 +1,6 @@
-import React from 'react';
-import { Bell, Search, Moon, Sun, User, Settings, LogOut } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -9,17 +8,19 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Badge } from '@/components/ui/badge';
-import { useMediaQuery } from '@/hooks/use-media-query';
+} from "@/components/ui/dropdown-menu";
+import { Input } from "@/components/ui/input";
+import { useMediaQuery } from "@/hooks/use-media-query";
+import { Bell, LogOut, Moon, Search, Settings, Sun, User } from "lucide-react";
+import React from "react";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   const isDesktop = useMediaQuery("(min-width: 768px)");
-  const [theme, setTheme] = React.useState<'light' | 'dark'>('light');
-  
+  const [theme, setTheme] = React.useState<"light" | "dark">("light");
+
   const toggleTheme = () => {
-    setTheme(theme === 'light' ? 'dark' : 'light');
+    setTheme(theme === "light" ? "dark" : "light");
     // In a real app, you would toggle the theme in your app context
   };
 
@@ -35,19 +36,23 @@ const Header = () => {
           />
         </div>
       )}
-      
+
       <div className="ml-auto flex items-center gap-4">
         <Button variant="ghost" size="icon" className="relative">
           <Bell className="h-5 w-5" />
           <span className="absolute h-2 w-2 rounded-full bg-red-500 top-2 right-2" />
         </Button>
-        
+
         <Button variant="ghost" size="icon" onClick={toggleTheme}>
-          {theme === 'light' ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}
+          {theme === "light" ? (
+            <Moon className="h-5 w-5" />
+          ) : (
+            <Sun className="h-5 w-5" />
+          )}
         </Button>
-        
+
         <div className="border-l h-8 mx-2" />
-        
+
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" className="relative h-8 w-8 rounded-full">
@@ -68,13 +73,17 @@ const Header = () => {
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem>
-              <User className="mr-2 h-4 w-4" />
-              <span>Profile</span>
+              <Link to={"/profile"} className="flex">
+                <User className="mr-2 h-4 w-4" />
+                <span>Profile</span>
+              </Link>
             </DropdownMenuItem>
             <DropdownMenuItem>
               <Bell className="mr-2 h-4 w-4" />
               <span>Notifications</span>
-              <Badge className="ml-auto" variant="secondary">9</Badge>
+              <Badge className="ml-auto" variant="secondary">
+                9
+              </Badge>
             </DropdownMenuItem>
             <DropdownMenuItem>
               <Settings className="mr-2 h-4 w-4" />

@@ -15,6 +15,7 @@ import Dashboard from "./pages/Dashboard";
 import Index from "./pages/Index";
 import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
+import ProfilePage from "./pages/Profile";
 import Reports from "./pages/Reports";
 import Schedule from "./pages/Schedule";
 import SemesterView from "./pages/SemesterView";
@@ -35,6 +36,7 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/login" element={<Login />} />
             <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/profile" element={<ProfilePage />} />
             <Route path="/users" element={<Users />} />
             <Route path="/users/add" element={<AddUser />} />
             <Route path="/courses" element={<Courses />} />
