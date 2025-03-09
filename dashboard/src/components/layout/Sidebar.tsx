@@ -4,7 +4,6 @@ import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 import {
   BookOpen,
-  BookOpenCheck,
   Calendar as CalendarIcon,
   ChevronLeft,
   FileText,
@@ -33,11 +32,6 @@ const Sidebar = () => {
   const menuItems = [
     { path: "/dashboard", name: "Dashboard", icon: <Home size={20} /> },
     { path: "/courses", name: "Courses", icon: <BookOpen size={20} /> },
-    {
-      path: "/assigned-courses",
-      name: "Assigned Courses",
-      icon: <BookOpenCheck size={20} />,
-    },
     { path: "/students", name: "Students", icon: <GraduationCap size={20} /> },
     { path: "/users", name: "Users", icon: <Users size={20} /> },
     { path: "/calendar", name: "Calendar", icon: <CalendarIcon size={20} /> },

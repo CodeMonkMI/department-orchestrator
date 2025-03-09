@@ -13,12 +13,18 @@ const CoursesContainer = () => {
           title="Course Management"
           description="Manage courses and academic schedules"
         />
-
-        <Button>
-          <Link to={"/courses/add"} className="gap-2 flex">
-            <BookPlus size={16} /> Add New Course
-          </Link>
-        </Button>
+        <div className="space-x-4">
+          <Button>
+            <Link to={"/assigned-courses"} className="gap-2 flex">
+              <BookPlus size={16} /> History
+            </Link>
+          </Button>
+          <Button>
+            <Link to={"/courses/add"} className="gap-2 flex">
+              <BookPlus size={16} /> Add New Course
+            </Link>
+          </Button>
+        </div>
       </div>
 
       <div className="space-y-6">
