@@ -1,25 +1,25 @@
-
-import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
+import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import AddCourse from "./pages/AddCourse";
+import AddNewStudents from "./pages/AddNewStudents";
+import AddUser from "./pages/AddUser";
+import AssignedCourses from "./pages/AssignedCourses";
+import Attendance from "./pages/Attendance";
+import Calendar from "./pages/Calendar";
+import Courses from "./pages/Courses";
+import Dashboard from "./pages/Dashboard";
 import Index from "./pages/Index";
 import Login from "./pages/Login";
-import Dashboard from "./pages/Dashboard";
-import Users from "./pages/Users";
-import AddUser from "./pages/AddUser";
-import Courses from "./pages/Courses";
-import AddCourse from "./pages/AddCourse";
-import Attendance from "./pages/Attendance";
-import Reports from "./pages/Reports";
-import Settings from "./pages/Settings";
-import AssignedCourses from "./pages/AssignedCourses";
-import Students from "./pages/Students";
-import SemesterView from "./pages/SemesterView";
-import Calendar from "./pages/Calendar";
 import NotFound from "./pages/NotFound";
+import Reports from "./pages/Reports";
+import SemesterView from "./pages/SemesterView";
+import Settings from "./pages/Settings";
+import Students from "./pages/Students";
+import Users from "./pages/Users";
 
 const queryClient = new QueryClient();
 
@@ -41,6 +41,7 @@ const App = () => (
             <Route path="/semester/:semesterId" element={<SemesterView />} />
             <Route path="/assigned-courses" element={<AssignedCourses />} />
             <Route path="/students" element={<Students />} />
+            <Route path="/students/add" element={<AddNewStudents />} />
             <Route path="/calendar" element={<Calendar />} />
             <Route path="/attendance" element={<Attendance />} />
             <Route path="/reports" element={<Reports />} />
