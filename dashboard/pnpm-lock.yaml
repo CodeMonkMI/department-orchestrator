@@ -92,6 +92,21 @@ importers:
       '@radix-ui/react-tooltip':
         specifier: ^1.1.4
         version: 1.1.8(@types/react-dom@18.3.5(@types/react@18.3.18))(@types/react@18.3.18)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@schedule-x/calendar':
+        specifier: ^2.21.1
+        version: 2.21.1(@preact/signals@2.0.1(preact@10.26.4))(preact@10.26.4)
+      '@schedule-x/events-service':
+        specifier: ^2.21.1
+        version: 2.21.1
+      '@schedule-x/react':
+        specifier: ^2.21.2
+        version: 2.21.2(@schedule-x/calendar@2.21.1(@preact/signals@2.0.1(preact@10.26.4))(preact@10.26.4))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@schedule-x/theme-default':
+        specifier: ^2.21.1
+        version: 2.21.1
+      '@schedule-x/theme-shadcn':
+        specifier: ^2.21.1
+        version: 2.21.1
       '@tanstack/react-query':
         specifier: ^5.56.2
         version: 5.67.2(react@18.3.1)
@@ -641,6 +656,14 @@ packages:
   '@pkgjs/parseargs@0.11.0':
     resolution: {integrity: sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==}
     engines: {node: '>=14'}
+
+  '@preact/signals-core@1.8.0':
+    resolution: {integrity: sha512-OBvUsRZqNmjzCZXWLxkZfhcgT+Fk8DDcT/8vD6a1xhDemodyy87UJRJfASMuSD8FaAIeGgGm85ydXhm7lr4fyA==}
+
+  '@preact/signals@2.0.1':
+    resolution: {integrity: sha512-f9p/utMgttPb9bJ+UgRBkTDZ9uQiZfX1/gV3pXGWz+yGNQj8MrnG55Xo8MAG4IHcb5UXQO6tvt9ZlsM4A2j+Rw==}
+    peerDependencies:
+      preact: 10.x
 
   '@radix-ui/number@1.1.0':
     resolution: {integrity: sha512-V3gRzhVNU1ldS5XhAPTom1fOIo4ccrjjJgmE+LI2h/WaFpHmx0MQApT+KZHnx8abG6Avtfcz4WoEciMnpFT3HQ==}
@@ -1347,6 +1370,28 @@ packages:
     resolution: {integrity: sha512-PIQeY5XDkrOysbQblSW7v3l1MDZzkTEzAfTPkj5VAu3FW8fS4ynyLg2sINp0fp3SjZ8xkRYpLqoKcYqAkhU1dw==}
     cpu: [x64]
     os: [win32]
+
+  '@schedule-x/calendar@2.21.1':
+    resolution: {integrity: sha512-vT+y8qTLRQH7n18EEKqYPq6AKUvzRIkGR7BDnwQCY27H22DEK3BiRF9Fsx0j99zB3A2BU+TwBo1YtJrkI/2kUQ==}
+    peerDependencies:
+      '@preact/signals': ^1.1.5
+      preact: ^10.19.2
+
+  '@schedule-x/events-service@2.21.1':
+    resolution: {integrity: sha512-llk9znPNTxx2wGJeZq4mf3qWyZcyX3ab+pa85NydNRd7lfr6ZVSIJaqHZfbBctrmgF3Jjh3zwRHHig5Uf/RI/Q==}
+
+  '@schedule-x/react@2.21.2':
+    resolution: {integrity: sha512-l6j9pT4Jkl0mUrX0suDIm96E7UHAGeXhVoj3tQThe4SfAIMXTC+MqstLoKHFUPGBKzFRQjVoxXH4Qiw//2WZRw==}
+    peerDependencies:
+      '@schedule-x/calendar': ^2.18.0
+      react: ^16.7.0 || ^17 || ^18 || ^19
+      react-dom: ^16.7.0 || ^17 || ^18 || ^19
+
+  '@schedule-x/theme-default@2.21.1':
+    resolution: {integrity: sha512-8ZL7DwQD9tey829m3sIBxBdmowNR8PSCRjGodIQSSVCKFPvsQ4YoRozQYbrup4kz3OJIUtR0nUHIxr/dhXtHbQ==}
+
+  '@schedule-x/theme-shadcn@2.21.1':
+    resolution: {integrity: sha512-LbR3sLJuYAT1E0o0zG3aYMG5d6UloFJh+cgvjjfSOid5oXG8Mdm/Tk2WshffK2eak0Q/lPEqavb7VL0CDTkL4w==}
 
   '@swc/core-darwin-arm64@1.11.8':
     resolution: {integrity: sha512-rrSsunyJWpHN+5V1zumndwSSifmIeFQBK9i2RMQQp15PgbgUNxHK5qoET1n20pcUrmZeT6jmJaEWlQchkV//Og==}
@@ -2227,6 +2272,9 @@ packages:
     resolution: {integrity: sha512-dle9A3yYxlBSrt8Fu+IpjGT8SY8hN0mlaA6GY8t0P5PjIOZemULz/E2Bnm/2dcUOena75OTNkHI76uZBNUUq3A==}
     engines: {node: ^10 || ^12 || >=14}
 
+  preact@10.26.4:
+    resolution: {integrity: sha512-KJhO7LBFTjP71d83trW+Ilnjbo+ySsaAgCfXOXUlmGzJ4ygYPWmysm77yg4emwfmoz3b22yvH5IsVFHbhUaH5w==}
+
   prelude-ls@1.2.1:
     resolution: {integrity: sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==}
     engines: {node: '>= 0.8.0'}
@@ -2880,6 +2928,13 @@ snapshots:
 
   '@pkgjs/parseargs@0.11.0':
     optional: true
+
+  '@preact/signals-core@1.8.0': {}
+
+  '@preact/signals@2.0.1(preact@10.26.4)':
+    dependencies:
+      '@preact/signals-core': 1.8.0
+      preact: 10.26.4
 
   '@radix-ui/number@1.1.0': {}
 
@@ -3596,6 +3651,23 @@ snapshots:
 
   '@rollup/rollup-win32-x64-msvc@4.35.0':
     optional: true
+
+  '@schedule-x/calendar@2.21.1(@preact/signals@2.0.1(preact@10.26.4))(preact@10.26.4)':
+    dependencies:
+      '@preact/signals': 2.0.1(preact@10.26.4)
+      preact: 10.26.4
+
+  '@schedule-x/events-service@2.21.1': {}
+
+  '@schedule-x/react@2.21.2(@schedule-x/calendar@2.21.1(@preact/signals@2.0.1(preact@10.26.4))(preact@10.26.4))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+    dependencies:
+      '@schedule-x/calendar': 2.21.1(@preact/signals@2.0.1(preact@10.26.4))(preact@10.26.4)
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+
+  '@schedule-x/theme-default@2.21.1': {}
+
+  '@schedule-x/theme-shadcn@2.21.1': {}
 
   '@swc/core-darwin-arm64@1.11.8':
     optional: true
@@ -4476,6 +4548,8 @@ snapshots:
       nanoid: 3.3.9
       picocolors: 1.1.1
       source-map-js: 1.2.1
+
+  preact@10.26.4: {}
 
   prelude-ls@1.2.1: {}
 
