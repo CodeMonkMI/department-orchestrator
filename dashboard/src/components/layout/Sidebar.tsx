@@ -35,6 +35,7 @@ const Sidebar = () => {
     { path: "/students", name: "Students", icon: <GraduationCap size={20} /> },
     { path: "/users", name: "Users", icon: <Users size={20} /> },
     { path: "/calendar", name: "Calendar", icon: <CalendarIcon size={20} /> },
+    { path: "/schedule", name: "Schedule", icon: <CalendarIcon size={20} /> },
     { path: "/reports", name: "Reports", icon: <FileText size={20} /> },
     { path: "/settings", name: "Settings", icon: <Settings size={20} /> },
   ];

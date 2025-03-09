@@ -16,6 +16,7 @@ import Index from "./pages/Index";
 import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
 import Reports from "./pages/Reports";
+import Schedule from "./pages/Schedule";
 import SemesterView from "./pages/SemesterView";
 import Settings from "./pages/Settings";
 import Students from "./pages/Students";
@@ -43,6 +44,7 @@ const App = () => (
             <Route path="/students" element={<Students />} />
             <Route path="/students/add" element={<AddNewStudents />} />
             <Route path="/calendar" element={<Calendar />} />
+            <Route path="/schedule" element={<Schedule />} />
             <Route path="/attendance" element={<Attendance />} />
             <Route path="/reports" element={<Reports />} />
             <Route path="/settings" element={<Settings />} />
