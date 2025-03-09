@@ -1,8 +1,6 @@
-
-import React from 'react';
-import { Users, BookOpen, GraduationCap, Calendar } from 'lucide-react';
-import StatCard from '../ui-elements/StatCard';
-import { formatNumber } from '@/lib/utils';
+import { formatNumber } from "@/lib/utils";
+import { BookOpen, Calendar, GraduationCap, Users } from "lucide-react";
+import StatCard from "../../../components/ui-elements/StatCard";
 
 const DashboardMetrics = () => {
   return (
@@ -15,7 +13,7 @@ const DashboardMetrics = () => {
         positive={true}
         delay={0.1}
       />
-      
+
       <StatCard
         title="Total Students"
         value={formatNumber(1254)}
@@ -24,7 +22,7 @@ const DashboardMetrics = () => {
         positive={true}
         delay={0.2}
       />
-      
+
       <StatCard
         title="Active Courses"
         value={formatNumber(32)}
@@ -33,7 +31,7 @@ const DashboardMetrics = () => {
         positive={true}
         delay={0.3}
       />
-      
+
       <StatCard
         title="Current Semester"
         value="Fall 2023"
