@@ -7,6 +7,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import AddCourse from "./pages/AddCourse";
 import AddNewStudents from "./pages/AddNewStudents";
 import AddUser from "./pages/AddUser";
+import Appearance from "./pages/Appearance";
 import AssignedCourses from "./pages/AssignedCourses";
 import Attendance from "./pages/Attendance";
 import Calendar from "./pages/Calendar";
@@ -15,12 +16,15 @@ import Dashboard from "./pages/Dashboard";
 import Index from "./pages/Index";
 import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
+import Notifications from "./pages/Notifications";
 import ProfilePage from "./pages/Profile";
 import Reports from "./pages/Reports";
 import Schedule from "./pages/Schedule";
+import Security from "./pages/Security";
 import SemesterView from "./pages/SemesterView";
 import Settings from "./pages/Settings";
 import Students from "./pages/Students";
+import System from "./pages/System";
 import Users from "./pages/Users";
 
 const queryClient = new QueryClient();
@@ -50,6 +54,10 @@ const App = () => (
             <Route path="/attendance" element={<Attendance />} />
             <Route path="/reports" element={<Reports />} />
             <Route path="/settings" element={<Settings />} />
+            <Route path="/settings/appearance" element={<Appearance />} />
+            <Route path="/settings/notifications" element={<Notifications />} />
+            <Route path="/settings/security" element={<Security />} />
+            <Route path="/settings/system" element={<System />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </AnimatePresence>
