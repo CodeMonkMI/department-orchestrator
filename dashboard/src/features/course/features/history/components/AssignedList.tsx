@@ -1,4 +1,3 @@
-import FadeIn from "@/components/animations/FadeIn";
 import Card from "@/components/ui-elements/Card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -39,7 +38,7 @@ const AssignedList = () => {
           </div>
         </div>
 
-        <FadeIn delay={0.2}>
+        <div>
           <Table>
             <TableHeader>
               <TableRow>
@@ -98,7 +97,7 @@ const AssignedList = () => {
               ))}
             </TableBody>
           </Table>
-        </FadeIn>
+        </div>
       </Card>
     </div>
   );

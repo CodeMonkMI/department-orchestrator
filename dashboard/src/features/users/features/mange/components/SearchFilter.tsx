@@ -1,10 +1,9 @@
-import FadeIn from "@/components/animations/FadeIn";
 import { Button } from "@/components/ui/button";
 import { Filter, Search } from "lucide-react";
 
 export default function SearchFilter() {
   return (
-    <FadeIn delay={0.3}>
+    <div>
       <div className="flex flex-col sm:flex-row gap-4">
         <div className="relative flex-1">
           <Search
@@ -23,6 +22,6 @@ export default function SearchFilter() {
           Filters
         </Button>
       </div>
-    </FadeIn>
+    </div>
   );
 }

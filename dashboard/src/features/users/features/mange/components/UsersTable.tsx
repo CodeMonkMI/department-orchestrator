@@ -1,6 +1,4 @@
-import FadeIn from "@/components/animations/FadeIn";
 import { Button } from "@/components/ui/button";
-import { motion } from "framer-motion";
 import { CheckCircle, MoreHorizontal, XCircle } from "lucide-react";
 
 const roleColors: Record<string, string> = {
@@ -81,7 +79,7 @@ const users = [
 
 export default function UsersTable() {
   return (
-    <FadeIn delay={0.4}>
+    <div>
       <div className="glass rounded-xl overflow-hidden">
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-slate-200">
@@ -127,20 +125,8 @@ export default function UsersTable() {
             </thead>
             <tbody className="bg-white divide-y divide-slate-200">
               {users.map((user, index) => (
-                <motion.tr
+                <tr
                   key={user.id}
-                  initial={{
-                    opacity: 0,
-                    y: 10,
-                  }}
-                  animate={{
-                    opacity: 1,
-                    y: 0,
-                  }}
-                  transition={{
-                    delay: 0.1 * index,
-                    duration: 0.3,
-                  }}
                   className="hover:bg-slate-50 transition-colors"
                 >
                   <td className="px-6 py-4 whitespace-nowrap">
@@ -198,7 +184,7 @@ export default function UsersTable() {
                       <MoreHorizontal size={16} />
                     </Button>
                   </td>
-                </motion.tr>
+                </tr>
               ))}
             </tbody>
           </table>
@@ -219,6 +205,6 @@ export default function UsersTable() {
           </div>
         </div>
       </div>
-    </FadeIn>
+    </div>
   );
 }

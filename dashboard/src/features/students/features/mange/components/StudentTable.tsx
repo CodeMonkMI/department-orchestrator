@@ -1,4 +1,3 @@
-import FadeIn from "@/components/animations/FadeIn";
 import Card from "@/components/ui-elements/Card";
 import { Button } from "@/components/ui/button";
 import {
@@ -234,7 +233,7 @@ const StudentTable = () => {
   };
   return (
     <div>
-      <FadeIn delay={0.4}>
+      <div>
         <Card className="overflow-hidden">
           <div className="overflow-x-auto">
             <Table>
@@ -350,7 +349,7 @@ const StudentTable = () => {
             </Table>
           </div>
         </Card>
-      </FadeIn>
+      </div>
     </div>
   );
 };

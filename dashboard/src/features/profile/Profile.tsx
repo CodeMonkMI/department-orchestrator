@@ -17,56 +17,10 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useMediaQuery } from "@/hooks/use-media-query";
-import { toast } from "@/hooks/use-toast";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { AtSign, BookOpen, Clock, Edit, Mail, Phone } from "lucide-react";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
-import * as z from "zod";
-
-const profileFormSchema = z.object({
-  fullName: z
-    .string()
-    .min(2, { message: "Name must be at least 2 characters." }),
-  email: z.string().email({ message: "Please enter a valid email address." }),
-  phone: z.string().optional(),
-  department: z.string(),
-  title: z.string(),
-  bio: z
-    .string()
-    .max(500, { message: "Bio cannot be longer than 500 characters." })
-    .optional(),
-});
-
-type ProfileFormValues = z.infer<typeof profileFormSchema>;
-
-const defaultValues: Partial<ProfileFormValues> = {
-  fullName: "Admin User",
-  email: "admin@university.edu",
-  phone: "+1 (555) 123-4567",
-  department: "Computer Science",
-  title: "Department Administrator",
-  bio: "Experienced department administrator with a focus on student success and faculty support.",
-};
 
 const ProfileContainer = () => {
-  const isMobile = useMediaQuery("(max-width: 768px)");
-  const [isEditing, setIsEditing] = useState(false);
-
-  const form = useForm<ProfileFormValues>({
-    resolver: zodResolver(profileFormSchema),
-    defaultValues,
-  });
-
-  function onSubmit(data: ProfileFormValues) {
-    toast({
-      title: "Profile Updated",
-      description: "Your profile information has been updated successfully.",
-    });
-  }
-
   return (
     <>
       <div className="mb-6">

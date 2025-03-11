@@ -12,7 +12,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Save } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 interface Student {
   id: number;
@@ -26,7 +26,6 @@ interface Student {
 }
 
 const StudentForm = () => {
-  const navigate = useNavigate();
   const { toast } = useToast();
 
   const { handleSubmit } = useForm();

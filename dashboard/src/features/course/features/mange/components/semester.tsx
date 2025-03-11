@@ -2,15 +2,8 @@ import Card from "@/components/ui-elements/Card";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { semesterData } from "@/features/course/data/semester";
-import { motion } from "framer-motion";
 import { Search } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-
-const statusColors: Record<string, string> = {
-  Active: "bg-emerald-100 text-emerald-800",
-  Upcoming: "bg-blue-100 text-blue-800",
-  Completed: "bg-slate-100 text-slate-800",
-};
 
 const Semester = () => {
   const navigate = useNavigate();
@@ -31,11 +24,8 @@ const Semester = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {semesterData.map((semester) => (
-            <motion.div
+            <div
               key={semester.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3 }}
               className="p-4 rounded-lg border bg-card text-card-foreground hover:shadow-md transition-all cursor-pointer"
               onClick={() => handleSemesterClick(semester.id)}
             >
@@ -48,7 +38,7 @@ const Semester = () => {
                 </div>
                 <Badge variant="secondary">{semester.courses} Courses</Badge>
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
       </Card>

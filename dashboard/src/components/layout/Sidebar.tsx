@@ -1,7 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
-import { motion } from "framer-motion";
 import {
   BookOpen,
   Calendar as CalendarIcon,
@@ -14,19 +13,14 @@ import {
   Settings,
   Users,
 } from "lucide-react";
-import React from "react";
+import { useState } from "react";
 import { NavLink } from "react-router-dom";
 
 const Sidebar = () => {
-  const [collapsed, setCollapsed] = React.useState(false);
+  const [collapsed, setCollapsed] = useState(false);
 
   const toggleSidebar = () => {
     setCollapsed(!collapsed);
-  };
-
-  const sidebarVariants = {
-    expanded: { width: "250px" },
-    collapsed: { width: "80px" },
   };
 
   const menuItems = [
@@ -41,11 +35,7 @@ const Sidebar = () => {
   ];
 
   return (
-    <motion.div
-      variants={sidebarVariants}
-      initial={collapsed ? "collapsed" : "expanded"}
-      animate={collapsed ? "collapsed" : "expanded"}
-      transition={{ type: "spring", stiffness: 300, damping: 30 }}
+    <div
       className={cn(
         "fixed top-0 left-0 h-screen bg-sidebar border-r border-sidebar-border z-40",
         collapsed ? "w-[80px]" : "w-[250px]"
@@ -59,14 +49,9 @@ const Sidebar = () => {
           )}
         >
           {!collapsed && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.2 }}
-              className="font-semibold text-xl text-sidebar-foreground"
-            >
+            <div className="font-semibold text-xl text-sidebar-foreground">
               CS Dept
-            </motion.div>
+            </div>
           )}
           <Button
             variant="ghost"
@@ -115,7 +100,7 @@ const Sidebar = () => {
           </Button>
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 };
 

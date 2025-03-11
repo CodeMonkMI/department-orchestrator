@@ -1,24 +1,22 @@
-
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { useToast } from '@/hooks/use-toast';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { ArrowRight, User, Lock } from 'lucide-react';
-import FadeIn from '@/components/animations/FadeIn';
+import FadeIn from "@/components/animations/FadeIn";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { useToast } from "@/hooks/use-toast";
+import { ArrowRight, Lock, User } from "lucide-react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { toast } = useToast();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     // Validation
     if (!email || !password) {
       toast({
@@ -28,24 +26,24 @@ const Login = () => {
       });
       return;
     }
-    
+
     try {
       setLoading(true);
-      
+
       // For demonstration, we'll use a simple check
       // In production, this would connect to your auth provider
-      if (email === 'admin@example.com' && password === 'password') {
+      if (email === "admin@example.com" && password === "password") {
         // Simulate API call
-        await new Promise(resolve => setTimeout(resolve, 800));
-        
+        await new Promise((resolve) => setTimeout(resolve, 800));
+
         // Success message
         toast({
           title: "Login successful",
           description: "Welcome to the Department Management System",
         });
-        
+
         // Redirect to dashboard
-        navigate('/dashboard');
+        navigate("/dashboard");
       } else {
         // Failed login
         toast({
@@ -67,12 +65,7 @@ const Login = () => {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-sky-50 to-indigo-50 px-4">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        className="w-full max-w-md glass rounded-2xl p-8 md:p-10"
-      >
+      <div className="w-full max-w-md glass rounded-2xl p-8 md:p-10">
         <div className="text-center mb-8">
           <FadeIn delay={0.1}>
             <div className="inline-block px-3 py-1 bg-primary/10 text-primary text-sm font-medium rounded-full mb-3">
@@ -90,7 +83,7 @@ const Login = () => {
         </div>
 
         <form onSubmit={handleLogin} className="space-y-5">
-          <FadeIn delay={0.4} className="space-y-2">
+          <div className="space-y-2">
             <Label htmlFor="email">Email</Label>
             <div className="relative">
               <User className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
@@ -104,7 +97,7 @@ const Login = () => {
                 disabled={loading}
               />
             </div>
-          </FadeIn>
+          </div>
 
           <FadeIn delay={0.5} className="space-y-2">
             <div className="flex justify-between items-center">
@@ -128,11 +121,7 @@ const Login = () => {
           </FadeIn>
 
           <FadeIn delay={0.6}>
-            <Button
-              type="submit"
-              className="w-full gap-2"
-              disabled={loading}
-            >
+            <Button type="submit" className="w-full gap-2" disabled={loading}>
               {loading ? "Logging in..." : "Sign in"}
               {!loading && <ArrowRight className="h-4 w-4" />}
             </Button>
@@ -144,7 +133,7 @@ const Login = () => {
             Demo credentials: admin@example.com / password
           </p>
         </FadeIn>
-      </motion.div>
+      </div>
     </div>
   );
 };
