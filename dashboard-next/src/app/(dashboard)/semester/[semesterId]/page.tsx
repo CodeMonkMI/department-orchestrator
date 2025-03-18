@@ -1,4 +1,4 @@
-import Layout from "@/components/layout/Layout";
+"use client";
 import Card from "@/components/ui-elements/Card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -34,11 +34,13 @@ import {
   MoreHorizontal,
   Users,
 } from "lucide-react";
+import { useParams } from "next/navigation";
 import React, { useState } from "react";
 
 const SemesterView = () => {
   // const { semesterId } = useParams<{ semesterId: string }>();
-  const semesterId = "1";
+
+  const { semesterId = "" as any } = useParams();
 
   const [activeTab, setActiveTab] = useState("courses");
   const [date, setDate] = React.useState<Date | undefined>(new Date());
@@ -99,7 +101,7 @@ const SemesterView = () => {
   };
 
   return (
-    <Layout>
+    <>
       <div className="mb-6">
         <Button
           variant="ghost"
@@ -406,7 +408,7 @@ const SemesterView = () => {
           </TabsContent>
         </Tabs>
       </Card>
-    </Layout>
+    </>
   );
 };
 

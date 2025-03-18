@@ -16,12 +16,12 @@ const CoursesContainer = () => {
         />
         <div className="space-x-4">
           <Button>
-            <Link href={"/dashboard/courses/history"} className="gap-2 flex">
+            <Link href={"/courses/history"} className="gap-2 flex">
               <BookPlus size={16} /> History
             </Link>
           </Button>
           <Button>
-            <Link href={"/dashboard/courses/add"} className="gap-2 flex">
+            <Link href={"/courses/add"} className="gap-2 flex">
               <BookPlus size={16} /> Add New Course
             </Link>
           </Button>
