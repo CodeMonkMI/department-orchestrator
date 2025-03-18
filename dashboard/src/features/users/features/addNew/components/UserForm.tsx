@@ -1,3 +1,4 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -10,8 +11,8 @@ import {
 } from "@/components/ui/select";
 import { toast } from "@/hooks/use-toast";
 import { Save } from "lucide-react";
+import Link from "next/link";
 import { useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router-dom";
 
 type UserRole =
   | "Chief Instructor"
@@ -31,7 +32,7 @@ interface UserFormData {
 }
 
 const UserForm = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -51,7 +52,7 @@ const UserForm = () => {
     });
 
     // Navigate back to users list
-    setTimeout(() => navigate("/users"), 1500);
+    // setTimeout(() => navigate("/users"), 1500);
   };
 
   const handleRoleChange = (value: string) => {
@@ -204,7 +205,7 @@ const UserForm = () => {
 
         <div className="flex justify-end gap-3 pt-4">
           <Button type="button" variant="outline">
-            <Link to={"/users"} className="gap-2 flex">
+            <Link href={"/users"} className="gap-2 flex">
               Cancel
             </Link>
           </Button>

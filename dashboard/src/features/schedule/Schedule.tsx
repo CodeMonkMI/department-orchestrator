@@ -1,3 +1,4 @@
+"use client";
 import PageTitle from "@/components/ui-elements/PageTitle";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";

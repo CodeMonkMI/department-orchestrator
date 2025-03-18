@@ -2,7 +2,8 @@ import Card from "@/components/ui-elements/Card";
 import PageTitle from "@/components/ui-elements/PageTitle";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, UserPlus } from "lucide-react";
-import { Link } from "react-router-dom";
+
+import Link from "next/link";
 import UserForm from "./components/UserForm";
 
 const AddUserContainer = () => {
@@ -14,7 +15,7 @@ const AddUserContainer = () => {
           description="Create a new user account"
         />
         <Button variant="outline">
-          <Link to={"/users"} className="gap-2 flex">
+          <Link href={"/users"} className="gap-2 flex">
             <ArrowLeft size={16} /> Back to Users
           </Link>
         </Button>

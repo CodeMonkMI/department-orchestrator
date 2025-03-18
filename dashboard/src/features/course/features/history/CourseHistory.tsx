@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
-import { Link } from "react-router-dom";
+
+import Link from "next/link";
 import AssignedList from "./components/AssignedList";
 
 const CourseHistoryContainer = () => {
@@ -15,7 +16,7 @@ const CourseHistoryContainer = () => {
         </div>
         <div className="flex gap-2">
           <Button variant="outline">
-            <Link to={"/courses"} className="gap-2 flex items-center">
+            <Link href={"/courses"} className="gap-2 flex items-center">
               <ArrowLeft size={16} /> Back to Courses
             </Link>
           </Button>

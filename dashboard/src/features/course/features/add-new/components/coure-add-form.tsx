@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -12,7 +14,6 @@ import { Textarea } from "@/components/ui/textarea";
 import { toast } from "@/hooks/use-toast";
 import { Save } from "lucide-react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
 
 interface CourseFormData {
   courseCode: string;
@@ -25,7 +26,7 @@ interface CourseFormData {
 }
 
 const CourseAddForm = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -225,7 +226,7 @@ const CourseAddForm = () => {
           <Button
             type="button"
             variant="outline"
-            onClick={() => navigate("/courses")}
+            // onClick={() => navigate("/courses")}
           >
             Cancel
           </Button>

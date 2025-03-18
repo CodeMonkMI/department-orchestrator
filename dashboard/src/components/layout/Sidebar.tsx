@@ -1,3 +1,4 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
@@ -13,11 +14,13 @@ import {
   Settings,
   Users,
 } from "lucide-react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { NavLink } from "react-router-dom";
 
 const Sidebar = () => {
   const [collapsed, setCollapsed] = useState(false);
+  const pathname = usePathname();
 
   const toggleSidebar = () => {
     setCollapsed(!collapsed);
@@ -25,13 +28,37 @@ const Sidebar = () => {
 
   const menuItems = [
     { path: "/dashboard", name: "Dashboard", icon: <Home size={20} /> },
-    { path: "/courses", name: "Courses", icon: <BookOpen size={20} /> },
-    { path: "/students", name: "Students", icon: <GraduationCap size={20} /> },
+    {
+      path: "/courses",
+      name: "Courses",
+      icon: <BookOpen size={20} />,
+    },
+    {
+      path: "/students",
+      name: "Students",
+      icon: <GraduationCap size={20} />,
+    },
     { path: "/users", name: "Users", icon: <Users size={20} /> },
-    { path: "/calendar", name: "Calendar", icon: <CalendarIcon size={20} /> },
-    { path: "/schedule", name: "Schedule", icon: <CalendarIcon size={20} /> },
-    { path: "/reports", name: "Reports", icon: <FileText size={20} /> },
-    { path: "/settings", name: "Settings", icon: <Settings size={20} /> },
+    {
+      path: "/calender",
+      name: "Calendar",
+      icon: <CalendarIcon size={20} />,
+    },
+    {
+      path: "/schedule",
+      name: "Schedule",
+      icon: <CalendarIcon size={20} />,
+    },
+    {
+      path: "/reports",
+      name: "Reports",
+      icon: <FileText size={20} />,
+    },
+    {
+      path: "/settings",
+      name: "Settings",
+      icon: <Settings size={20} />,
+    },
   ];
 
   return (
@@ -66,22 +93,20 @@ const Sidebar = () => {
         <ScrollArea className="flex-1 py-4">
           <nav className="space-y-1 px-2">
             {menuItems.map((item) => (
-              <NavLink
+              <Link
                 key={item.path}
-                to={item.path}
-                className={({ isActive }) =>
-                  cn(
-                    "flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-colors",
-                    isActive
-                      ? "bg-sidebar-primary text-sidebar-primary-foreground"
-                      : "text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
-                    collapsed && "justify-center"
-                  )
-                }
+                href={item.path}
+                className={cn(
+                  "flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-colors",
+                  pathname === item.path
+                    ? "bg-sidebar-primary text-sidebar-primary-foreground"
+                    : "text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
+                  collapsed && "justify-center"
+                )}
               >
                 <span>{item.icon}</span>
                 {!collapsed && <span>{item.name}</span>}
-              </NavLink>
+              </Link>
             ))}
           </nav>
         </ScrollArea>

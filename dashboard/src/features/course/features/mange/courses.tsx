@@ -1,7 +1,8 @@
 import PageTitle from "@/components/ui-elements/PageTitle";
 import { Button } from "@/components/ui/button";
 import { BookPlus } from "lucide-react";
-import { Link } from "react-router-dom";
+
+import Link from "next/link";
 import CourseList from "./components/course-ist";
 import Semester from "./components/semester";
 
@@ -15,12 +16,12 @@ const CoursesContainer = () => {
         />
         <div className="space-x-4">
           <Button>
-            <Link to={"/assigned-courses"} className="gap-2 flex">
+            <Link href={"/courses/history"} className="gap-2 flex">
               <BookPlus size={16} /> History
             </Link>
           </Button>
           <Button>
-            <Link to={"/courses/add"} className="gap-2 flex">
+            <Link href={"/courses/add"} className="gap-2 flex">
               <BookPlus size={16} /> Add New Course
             </Link>
           </Button>

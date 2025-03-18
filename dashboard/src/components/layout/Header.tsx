@@ -1,3 +1,5 @@
+"use client";
+
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -12,8 +14,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { Bell, LogOut, Moon, Search, Settings, Sun, User } from "lucide-react";
+import Link from "next/link";
 import React from "react";
-import { Link } from "react-router-dom";
 
 const Header = () => {
   const isDesktop = useMediaQuery("(min-width: 768px)");
@@ -73,7 +75,7 @@ const Header = () => {
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem>
-              <Link to={"/profile"} className="flex">
+              <Link href={"/profile"} className="flex">
                 <User className="mr-2 h-4 w-4" />
                 <span>Profile</span>
               </Link>

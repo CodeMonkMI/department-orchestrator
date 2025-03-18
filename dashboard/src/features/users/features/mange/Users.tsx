@@ -1,12 +1,13 @@
 import PageTitle from "@/components/ui-elements/PageTitle";
 import { Button } from "@/components/ui/button";
 import { UserPlus } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
+
+import Link from "next/link";
 import SearchFilter from "./components/SearchFilter";
 import UsersTable from "./components/UsersTable";
 
 const UsersContainer = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   return (
     <>
@@ -19,7 +20,7 @@ const UsersContainer = () => {
           />
 
           <Button>
-            <Link to={"/users/add"} className="gap-2 flex">
+            <Link href={"/users/add"} className="gap-2 flex">
               <UserPlus size={16} className="mr-2" /> Add New User
             </Link>
           </Button>

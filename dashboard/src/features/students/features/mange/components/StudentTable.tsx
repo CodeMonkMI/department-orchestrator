@@ -25,7 +25,6 @@ import {
   XCircle,
 } from "lucide-react";
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 interface Student {
   id: number;
@@ -121,7 +120,7 @@ const initialStudents: Student[] = [
   },
 ];
 const StudentTable = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const { toast } = useToast();
   const [students, setStudents] = useState<Student[]>(initialStudents);
   const [searchTerm, setSearchTerm] = useState("");

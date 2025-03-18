@@ -2,7 +2,8 @@ import Card from "@/components/ui-elements/Card";
 import PageTitle from "@/components/ui-elements/PageTitle";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, BookPlus } from "lucide-react";
-import { Link } from "react-router-dom";
+
+import Link from "next/link";
 import StudentForm from "./components/StudentForm";
 
 const AddNewStudentContainer = () => {
@@ -15,7 +16,7 @@ const AddNewStudentContainer = () => {
         />
 
         <Button variant="outline">
-          <Link to={"/students"} className="gap-2 flex items-center">
+          <Link href={"/students"} className="gap-2 flex items-center">
             <ArrowLeft size={16} /> Back to Students
           </Link>
         </Button>

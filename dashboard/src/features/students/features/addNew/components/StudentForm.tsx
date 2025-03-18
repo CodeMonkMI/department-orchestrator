@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -10,9 +12,9 @@ import {
 } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import { Save } from "lucide-react";
+import Link from "next/link";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
 
 interface Student {
   id: number;
@@ -168,7 +170,7 @@ const StudentForm = () => {
 
         <div className="flex justify-end gap-3 pt-4">
           <Button type="button" variant="outline">
-            <Link to={"/students"}>Cancel</Link>
+            <Link href={"/students"}>Cancel</Link>
           </Button>
           <Button type="submit" className="gap-2">
             <Save size={16} /> Save Student

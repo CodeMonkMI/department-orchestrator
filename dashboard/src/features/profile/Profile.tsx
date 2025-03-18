@@ -18,7 +18,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { AtSign, BookOpen, Clock, Edit, Mail, Phone } from "lucide-react";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 
 const ProfileContainer = () => {
   return (
@@ -61,7 +61,7 @@ const ProfileContainer = () => {
 
             <Button variant="outline" className="mt-6 w-full">
               <Link
-                to={"/settings/system"}
+                href={"/settings/system"}
                 className="flex justify-center w-full items-center"
               >
                 <Edit className="mr-2 h-4 w-4" /> Edit Profile
