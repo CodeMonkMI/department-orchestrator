@@ -1,4 +1,3 @@
-import FadeIn from "@/components/animations/FadeIn";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -67,19 +66,15 @@ const Login = () => {
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-sky-50 to-indigo-50 px-4">
       <div className="w-full max-w-md glass rounded-2xl p-8 md:p-10">
         <div className="text-center mb-8">
-          <FadeIn delay={0.1}>
-            <div className="inline-block px-3 py-1 bg-primary/10 text-primary text-sm font-medium rounded-full mb-3">
-              Department Management
-            </div>
-          </FadeIn>
-          <FadeIn delay={0.2}>
-            <h1 className="text-3xl font-bold">Welcome back</h1>
-          </FadeIn>
-          <FadeIn delay={0.3}>
-            <p className="text-muted-foreground mt-2">
-              Sign in to access your department dashboard
-            </p>
-          </FadeIn>
+          <div className="inline-block px-3 py-1 bg-primary/10 text-primary text-sm font-medium rounded-full mb-3">
+            Department Management
+          </div>
+
+          <h1 className="text-3xl font-bold">Welcome back</h1>
+
+          <p className="text-muted-foreground mt-2">
+            Sign in to access your department dashboard
+          </p>
         </div>
 
         <form onSubmit={handleLogin} className="space-y-5">
@@ -99,40 +94,34 @@ const Login = () => {
             </div>
           </div>
 
-          <FadeIn delay={0.5} className="space-y-2">
-            <div className="flex justify-between items-center">
-              <Label htmlFor="password">Password</Label>
-              <a href="#" className="text-sm text-primary hover:underline">
-                Forgot password?
-              </a>
-            </div>
-            <div className="relative">
-              <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-              <Input
-                id="password"
-                type="password"
-                placeholder="••••••••"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="pl-10"
-                disabled={loading}
-              />
-            </div>
-          </FadeIn>
+          <div className="flex justify-between items-center">
+            <Label htmlFor="password">Password</Label>
+            <a href="#" className="text-sm text-primary hover:underline">
+              Forgot password?
+            </a>
+          </div>
+          <div className="relative">
+            <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+            <Input
+              id="password"
+              type="password"
+              placeholder="••••••••"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="pl-10"
+              disabled={loading}
+            />
+          </div>
 
-          <FadeIn delay={0.6}>
-            <Button type="submit" className="w-full gap-2" disabled={loading}>
-              {loading ? "Logging in..." : "Sign in"}
-              {!loading && <ArrowRight className="h-4 w-4" />}
-            </Button>
-          </FadeIn>
+          <Button type="submit" className="w-full gap-2" disabled={loading}>
+            {loading ? "Logging in..." : "Sign in"}
+            {!loading && <ArrowRight className="h-4 w-4" />}
+          </Button>
         </form>
 
-        <FadeIn delay={0.7}>
-          <p className="text-sm text-center mt-6 text-muted-foreground">
-            Demo credentials: admin@example.com / password
-          </p>
-        </FadeIn>
+        <p className="text-sm text-center mt-6 text-muted-foreground">
+          Demo credentials: admin@example.com / password
+        </p>
       </div>
     </div>
   );

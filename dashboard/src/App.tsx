@@ -2,7 +2,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { AnimatePresence } from "framer-motion";
+
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import AddCourse from "./pages/AddCourse";
 import AddNewStudents from "./pages/AddNewStudents";
@@ -34,7 +34,7 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        <AnimatePresence mode="wait">
+        <>
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/login" element={<Login />} />
@@ -62,7 +62,7 @@ const App = () => (
             <Route path="/settings/system" element={<System />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
-        </AnimatePresence>
+        </>
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
