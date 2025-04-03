@@ -11,6 +11,7 @@ The Department Orchestrator is a comprehensive management system designed to str
 - Operational workflow tracking
 - Analytics dashboard with department metrics
 - Mobile-responsive design
+- Interactive calendar scheduling system, conflict detection, and automated resource allocation
 
 # Project Monorepo
 This monorepo contains all the components of the Department Orchestrator project:
