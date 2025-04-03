@@ -31,32 +31,32 @@ This monorepo contains all the components of the Department Orchestrator project
 
 1. Install dependencies:
    ```bash
-   npm install
+   pnpm install
    ```
 
 2. Start development servers:
    ```bash
-   npm run dev
+   pnpm run dev
    ```
 
 3. Build all packages:
    ```bash
-   npm run build
+   pnpm run build
    ```
 
 ## Available Scripts
 
 - `docker-compose -f docker/docker-compose.yaml up -d` - Run database with docker-compose
-- `npm run dev` - Start all projects in development mode
-- `npm run build` - Build all projects
-- `npm run start` - Start all projects in production mode
-- `npm run lint` - Run linting across all projects
+- `pnpm run dev` - Start all projects in development mode
+- `pnpm run build` - Build all projects
+- `pnpm run start` - Start all projects in production mode
+- `pnpm run lint` - Run linting across all projects
 
 ## Package-specific Commands
 
 You can run commands for specific packages using the workspace syntax:
 
 ```bash
-npm run dev -w @do/backend
-npm run dev -w @do/frontend
+pnpm run dev -w @do/backend
+pnpm run dev -w @do/frontend
 ```
