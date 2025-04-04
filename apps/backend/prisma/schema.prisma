@@ -13,27 +13,295 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Post {
-  id        Int      @id @default(autoincrement())
-  title     String   @db.VarChar(255)
-  createdAt DateTime @default(now()) @db.Timestamp(6)
-  content   String?
-  published Boolean  @default(false)
-  authorId  Int
-  User      User     @relation(fields: [authorId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+enum RoleEnum {
+  ADMIN
+  USER
 }
 
-model Profile {
-  id     Int     @id @default(autoincrement())
-  bio    String?
-  userId Int     @unique
-  User   User    @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+model Role {
+  id    String   @id @default(cuid())
+  name  String   @unique @db.VarChar(255)
+  role  RoleEnum @unique @default(USER)
+  users User[]
 }
 
 model User {
-  id      Int      @id @default(autoincrement())
-  name    String?  @db.VarChar(255)
-  email   String   @unique @db.VarChar(255)
-  Post    Post[]
-  Profile Profile?
+  id                String              @id @default(cuid()) @db.Char(255)
+  fullname          String?             @db.VarChar(255)
+  email             String              @unique @db.VarChar(255)
+  username          String              @unique @db.VarChar(255)
+  password          String              @unique @db.VarChar(255)
+  title             String              @unique @db.VarChar(255)
+  Role              Role?               @relation(fields: [roleId], references: [id])
+  roleId            String?
+  CourseOffering    CourseOffering[]
+  StudentEnrollment StudentEnrollment[]
+  AttendanceRecord  AttendanceRecord[]
+  Report            Report[]
+  Activity          Activity[]
+  Student           Student[]
+  Teacher           Teacher[]
+  TaskForMe         Task[]              @relation("TaskAssignee")
+  TaskAssignedByMe  Task[]              @relation("TaskAssigner")
+}
+
+enum SemesterTypeEnum {
+  ACADEMIC
+  NONACADEMIC
+}
+
+model Semester {
+  id             String           @id @default(cuid())
+  name           String
+  type           SemesterTypeEnum @default(ACADEMIC)
+  maxStudents    Int
+  maxCourses     Int
+  CourseOffering CourseOffering[]
+}
+
+enum CourseTypeEnum {
+  ELECTIVE
+  REQUIRED
+}
+
+model Course {
+  id          String           @id @default(cuid())
+  code        String
+  type        CourseTypeEnum   @default(REQUIRED)
+  name        String
+  description String
+  credits     Int
+  offerings   CourseOffering[]
+}
+
+model CourseOffering {
+  id                  String                    @id @default(cuid())
+  courseId            String
+  semesterId          String
+  courseAssignmentIds String[]
+  status              String
+  semester            Semester                  @relation(fields: [semesterId], references: [id])
+  course              Course                    @relation(fields: [courseId], references: [id])
+  courseAssignment    TeacherCourseAssignment[]
+  schedules           CourseSchedule[]
+  enrollments         StudentEnrollment[]
+  attendances         AttendanceRecord[]
+  User                User?                     @relation(fields: [userId], references: [id])
+  userId              String?                   @db.Char(255)
+}
+
+enum RoomTypeEnum {
+  ClASSROOM
+  OFFICE
+  AUDITORIUM
+  LIBRARY
+  LAB
+}
+
+model Room {
+  id             String           @id @default(cuid())
+  name           String
+  code           String
+  description    String?
+  capacity       Int              @default(30)
+  type           RoomTypeEnum     @default(ClASSROOM)
+  CourseSchedule CourseSchedule[]
+}
+
+model CourseSchedule {
+  id               String         @id @default(cuid())
+  courseOfferingId String
+  dayOfWeek        String
+  startTime        DateTime       @db.Time()
+  endTime          DateTime       @db.Time()
+  roomId           String
+  room             Room           @relation(fields: [roomId], references: [id])
+  courseOffering   CourseOffering @relation(fields: [courseOfferingId], references: [id])
+}
+
+enum AttendanceStatusEnum {
+  PRESENT
+  ABSENT
+  LATE
+  REVOKED
+}
+
+model AttendanceRecord {
+  id               String               @id @default(cuid())
+  userId           String
+  date             DateTime             @db.Date
+  status           AttendanceStatusEnum @default(PRESENT)
+  checkInTime      DateTime             @db.Time()
+  checkOutTime     DateTime             @db.Time()
+  courseOfferingId String
+  notes            String?
+  user             User                 @relation(fields: [userId], references: [id])
+  course           CourseOffering       @relation(fields: [courseOfferingId], references: [id])
+}
+
+model Report {
+  id          String   @id @default(cuid())
+  title       String
+  description String?
+  type        String
+  generatedBy String
+  generatedAt DateTime
+  filePath    String
+  parameters  String
+  user        User     @relation(fields: [generatedBy], references: [id])
+}
+
+enum TaskPriorityEnum {
+  HIGH
+  MEDIUM
+  LOW
+}
+
+enum TaskStatusEnum {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+  DELETED
+}
+
+model Task {
+  id          String           @id @default(cuid())
+  title       String
+  description String?
+  assignedTo  String
+  assignedBy  String
+  dueDate     DateTime         @db.Date
+  priority    TaskPriorityEnum @default(LOW)
+  status      TaskStatusEnum   @default(PENDING)
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+  assignee    User             @relation("TaskAssignee", fields: [assignedTo], references: [id])
+  assigner    User             @relation("TaskAssigner", fields: [assignedBy], references: [id])
+}
+
+enum StudentStatusEnum {
+  PENDING
+  ACTIVE
+  INACTIVE
+  GRADUATED
+  DROPPED
+  SUSPENDED
+}
+
+model Student {
+  id             String              @id @default(cuid())
+  userId         String
+  enrollmentDate DateTime            @db.Date
+  status         StudentStatusEnum   @default(ACTIVE)
+  session        String
+  graduationYear Int
+  user           User                @relation(fields: [userId], references: [id])
+  courses        StudentEnrollment[]
+}
+
+enum StudentEnrollmentStatusEnum {
+  ENROLLED
+  PROGRESS
+  DROPPED
+  COMPLETED
+}
+
+model StudentEnrollment {
+  id               String                      @id @default(cuid())
+  studentId        String
+  courseOfferingId String
+  enrollmentDate   DateTime                    @db.Date
+  status           StudentEnrollmentStatusEnum @default(ENROLLED)
+  grade            String
+  student          Student                     @relation(fields: [studentId], references: [id])
+  course           CourseOffering              @relation(fields: [courseOfferingId], references: [id])
+  User             User?                       @relation(fields: [userId], references: [id])
+  userId           String?                     @db.Char(255)
+}
+
+enum TeacherStatusEnum {
+  ACTIVE
+  INACTIVE
+  RETIRED
+  SUSPENDED
+  VACATION
+}
+
+model Teacher {
+  id                      String                    @id @default(cuid())
+  title                   String
+  status                  TeacherStatusEnum         @default(ACTIVE)
+  joinDate                DateTime                  @db.Date
+  officeLocation          String
+  userId                  String
+  user                    User                      @relation(fields: [userId], references: [id])
+  TeacherCourseAssignment TeacherCourseAssignment[]
+}
+
+enum TeacherCourseAssignmentStatusEnum {
+  PENDING
+  PROGRESS
+  DROPPED
+  COMPLETED
+}
+
+model TeacherCourseAssignment {
+  id               String                            @id @default(cuid())
+  teacherId        String
+  courseOfferingId String
+  assignDate       DateTime                          @db.Date
+  status           TeacherCourseAssignmentStatusEnum @default(PENDING)
+  grade            String
+  teacher          Teacher                           @relation(fields: [teacherId], references: [id])
+  course           CourseOffering                    @relation(fields: [courseOfferingId], references: [id])
+}
+
+enum ActivityTypeEnum {
+  LOGIN
+  LOGOUT
+  CREATE
+  GIVE_ATTENDANCE
+  UPDATE_ATTENDANCE
+  DELETE_ATTENDANCE
+  CREATE_REPORT
+  UPDATE_REPORT
+  DELETE_REPORT
+  CREATE_TASK
+  UPDATE_TASK
+  DELETE_TASK
+  CREATE_COURSE
+  UPDATE_COURSE
+  DELETE_COURSE
+  CREATE_SEMESTER
+  UPDATE_SEMESTER
+  DELETE_SEMESTER
+  CREATE_ROOM
+  UPDATE_ROOM
+  DELETE_ROOM
+  CREATE_COURSE_SCHEDULE
+  UPDATE_COURSE_SCHEDULE
+  DELETE_COURSE_SCHEDULE
+  CREATE_COURSE_OFFERING
+  UPDATE_COURSE_OFFERING
+  DELETE_COURSE_OFFERING
+  CREATE_STUDENT_ENROLLMENT
+  UPDATE_STUDENT_ENROLLMENT
+  DELETE_STUDENT_ENROLLMENT
+  CREATE_ATTENDANCE_RECORD
+  UPDATE_ATTENDANCE_RECORD
+  DELETE_ATTENDANCE_RECORD
+  CREATE_USER
+  UPDATE_USER
+  DELETE_USER
+}
+
+model Activity {
+  id           String           @id @default(cuid())
+  activityType ActivityTypeEnum
+  description  String?
+  ipAddress    String
+  serverOrigin String
+  userId       String
+  user         User             @relation(fields: [userId], references: [id])
 }
