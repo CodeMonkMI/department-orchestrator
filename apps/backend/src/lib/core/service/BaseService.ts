@@ -7,8 +7,8 @@ export abstract class BaseService<TDelegate>
   implements IBaseService<TDelegate>
 {
   constructor(
-    private readonly repository: BaseRepository<TDelegate>,
-    private readonly selector: BaseSelector<TDelegate>
+    protected readonly repository: BaseRepository<TDelegate>,
+    protected readonly selector: BaseSelector<TDelegate>
   ) {}
   async find(
     where?: Prisma.Args<TDelegate, "findMany">["where"]
@@ -22,9 +22,9 @@ export abstract class BaseService<TDelegate>
     try {
       return this.repository.findAll({
         where,
+        select: this.selector.find,
       });
     } catch (error) {
-      console.log(error);
       throw new Error(`[Base service] FindAll Fetched failed`);
     }
   }
@@ -92,5 +92,11 @@ export abstract class BaseService<TDelegate>
     } catch (error) {
       throw new Error(`[Base service] Create - failed `);
     }
+  }
+
+  generateError(message: string, statusCode: number = 500): Error {
+    const error: any = new Error(message);
+    error.statusCode = statusCode;
+    return error;
   }
 }

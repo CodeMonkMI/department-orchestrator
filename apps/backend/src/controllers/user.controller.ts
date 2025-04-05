@@ -1,13 +1,14 @@
 import { Controller } from "@/lib/core/decorator/controller.decorator";
 import { GET, POST } from "@/lib/core/decorator/router.decorator";
+import { UserSchema } from "@/schema/user.schema";
 import { UserService } from "@/services/user.service";
 import { NextFunction, Request, Response } from "express";
 import { autoInjectable } from "tsyringe";
 
 @autoInjectable()
-@Controller("/user")
+@Controller("/api/v1/user")
 export class UserController {
-  constructor(readonly userService: UserService) {}
+  constructor(readonly userService: UserService, readonly schema: UserSchema) {}
 
   @GET("/")
   async find(_req: Request, res: Response, _next: NextFunction) {
@@ -18,9 +19,18 @@ export class UserController {
 
   @POST("/")
   async create(req: Request, res: Response, next: NextFunction) {
-    console.log("user service created");
-    const newData = this.userService.create(req.body);
-    return res.status(200).json(newData);
+    try {
+      const result = this.schema.createUser().safeParse(req.body);
+
+      if (!result.success) {
+        return res.status(400).json(result.error.errors);
+      }
+
+      const newData = await this.userService.create(result.data);
+      return res.status(200).json(newData);
+    } catch (error) {
+      return next(error);
+    }
   }
 }
 

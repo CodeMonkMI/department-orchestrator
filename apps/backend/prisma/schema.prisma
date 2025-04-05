@@ -30,8 +30,8 @@ model User {
   fullname          String?             @db.VarChar(255)
   email             String              @unique @db.VarChar(255)
   username          String              @unique @db.VarChar(255)
-  password          String              @unique @db.VarChar(255)
-  title             String              @unique @db.VarChar(255)
+  password          String              @db.VarChar(255)
+  title             String              @db.VarChar(255)
   Role              Role?               @relation(fields: [roleId], references: [id])
   roleId            String?
   CourseOffering    CourseOffering[]
