@@ -2,10 +2,14 @@ import cors from "cors";
 import dotenv from "dotenv";
 import express, { Express, Request, Response } from "express";
 import morgan from "morgan";
+import "reflect-metadata";
+import { AuthController } from "./controllers/auth.controller";
 import { UserController } from "./controllers/user.controller";
 import registerController from "./lib/core/controller/registerControllers";
 
-dotenv.config();
+dotenv.config({
+  path: ".env",
+});
 
 export function createApp() {
   const app: Express = express();
@@ -29,7 +33,7 @@ export function createApp() {
     console.log("object");
   });
 
-  registerController(app, [UserController]);
+  registerController(app, [UserController, AuthController]);
 
   // 404 not found handler
   app.use((_req, res: Response) => {

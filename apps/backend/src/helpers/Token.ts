@@ -20,7 +20,7 @@ export class Token {
         iat: new Date().getTime(),
         exp: Date.now() + 1000 * 60 * 60,
       },
-      JWT_SECRET ? JWT_SECRET : ""
+      JWT_SECRET ? JWT_SECRET : "secret"
     );
     return token;
   }
