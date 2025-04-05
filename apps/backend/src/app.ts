@@ -38,9 +38,12 @@ export function createApp() {
 
   // 500 internal server error handler
   app.use((err: any, _req: any, res: Response, _next: any): any => {
+    console.log(err.message);
+
     if (err?.statusCode) {
       return res.status(err.statusCode).json({ message: err.message });
     }
+
     return res.status(500).json({ message: "Internal Server Error" });
   });
 

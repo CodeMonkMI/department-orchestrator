@@ -40,11 +40,10 @@ export class UserService extends BaseService<UserDelegate> {
         this.selector.getBase() as Prisma.UserSelect
       );
     } catch (error: unknown) {
-      console.error("[User service] Create - failed:\n", error);
       if (error && (error as any)?.statusCode) {
         throw error;
       }
-      throw this.generateError(`[Base service] Create - failed`, 500);
+      throw this.generateError(`[User service] Create - failed`);
     }
   }
 }
