@@ -39,7 +39,8 @@ export abstract class BaseRepository<
     });
   }
   findById(
-    id: ID
+    id: ID,
+    select?: Options<TDelegate>["select"] | true
   ): Promise<
     Prisma.Result<
       TDelegate,
@@ -53,6 +54,7 @@ export abstract class BaseRepository<
         where: {
           id,
         },
+        select,
       });
     });
   }

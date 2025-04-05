@@ -50,7 +50,7 @@ export abstract class BaseService<TDelegate>
     id: ID
   ): Promise<Prisma.Result<TDelegate, { id: ID }, "findUnique">> {
     try {
-      return this.repository.findById(id);
+      return this.repository.findById(id, this.selector.findById);
     } catch (error) {
       throw new Error(`[Base service] FindById - Fetched failed `);
     }
