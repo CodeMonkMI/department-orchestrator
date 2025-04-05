@@ -4,12 +4,17 @@ import { UserRepository } from "@/repository/user.repository";
 import { UserSelector } from "@/selectors/user.selector";
 import { Prisma } from "@prisma/client";
 import { autoInjectable } from "tsyringe";
+import { RoleService } from "./role.service";
 
 type UserDelegate = Prisma.UserDelegate;
 
 @autoInjectable()
 export class UserService extends BaseService<UserDelegate> {
-  constructor(repository: UserRepository, readonly selector: UserSelector) {
+  constructor(
+    repository: UserRepository,
+    readonly selector: UserSelector,
+    readonly roleService: RoleService
+  ) {
     // its required to be here
     super(repository, selector);
   }
@@ -24,6 +29,11 @@ export class UserService extends BaseService<UserDelegate> {
     >
   > {
     try {
+      // check if user role is exist
+      const findRole = await this.roleService.findByID(data.roleId!!);
+      if (!findRole) {
+        throw this.generateError("Invalid role!", 400);
+      }
       // check if email and username is already exists
       const findUser = await this.repository.findOne({
         where: { OR: [{ email: data.email }, { username: data.username }] },

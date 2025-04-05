@@ -31,6 +31,9 @@ export class UserSchema {
         .string({ message: "Password is required" })
         .min(6, { message: "Password must be at least 6 characters" }),
       title: z.string({ message: "Title is required!" }),
+      roleId: z
+        .string({ message: "Role is required!" })
+        .min(1, { message: "Role is required!" }),
     });
   }
   public updateUserDTO() {

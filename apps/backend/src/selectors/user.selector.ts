@@ -1,9 +1,13 @@
 import { BaseSelector } from "@/lib/core/selector/BaseSelector";
 import { Prisma } from "@prisma/client";
-import { singleton } from "tsyringe";
+import { injectable } from "tsyringe";
+import { RoleSelector } from "./role.selector";
 
-@singleton()
+@injectable()
 export class UserSelector extends BaseSelector<Prisma.UserDelegate> {
+  constructor(protected roleSelector: RoleSelector) {
+    super();
+  }
   public getBase() {
     return {
       id: true,
@@ -12,6 +16,7 @@ export class UserSelector extends BaseSelector<Prisma.UserDelegate> {
       email: true,
       title: true,
       password: false,
+      Role: true,
     };
   }
 }
