@@ -43,6 +43,8 @@ model User {
   Teacher           Teacher[]
   TaskForMe         Task[]              @relation("TaskAssignee")
   TaskAssignedByMe  Task[]              @relation("TaskAssigner")
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
 }
 
 enum SemesterTypeEnum {
@@ -57,6 +59,8 @@ model Semester {
   maxStudents    Int
   maxCourses     Int
   CourseOffering CourseOffering[]
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
 }
 
 enum CourseTypeEnum {
@@ -72,6 +76,8 @@ model Course {
   description String
   credits     Int
   offerings   CourseOffering[]
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
 }
 
 model CourseOffering {
@@ -88,6 +94,8 @@ model CourseOffering {
   attendances         AttendanceRecord[]
   User                User?                     @relation(fields: [userId], references: [id])
   userId              String?                   @db.Char(255)
+  createdAt           DateTime                  @default(now())
+  updatedAt           DateTime                  @updatedAt
 }
 
 enum RoomTypeEnum {
@@ -106,6 +114,8 @@ model Room {
   capacity       Int              @default(30)
   type           RoomTypeEnum     @default(ClASSROOM)
   CourseSchedule CourseSchedule[]
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
 }
 
 model CourseSchedule {
@@ -117,6 +127,8 @@ model CourseSchedule {
   roomId           String
   room             Room           @relation(fields: [roomId], references: [id])
   courseOffering   CourseOffering @relation(fields: [courseOfferingId], references: [id])
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
 }
 
 enum AttendanceStatusEnum {
@@ -137,6 +149,8 @@ model AttendanceRecord {
   notes            String?
   user             User                 @relation(fields: [userId], references: [id])
   course           CourseOffering       @relation(fields: [courseOfferingId], references: [id])
+  createdAt        DateTime             @default(now())
+  updatedAt        DateTime             @updatedAt
 }
 
 model Report {
@@ -149,6 +163,8 @@ model Report {
   filePath    String
   parameters  String
   user        User     @relation(fields: [generatedBy], references: [id])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
 enum TaskPriorityEnum {
@@ -198,6 +214,8 @@ model Student {
   graduationYear Int
   user           User                @relation(fields: [userId], references: [id])
   courses        StudentEnrollment[]
+  createdAt      DateTime            @default(now())
+  updatedAt      DateTime            @updatedAt
 }
 
 enum StudentEnrollmentStatusEnum {
@@ -218,6 +236,8 @@ model StudentEnrollment {
   course           CourseOffering              @relation(fields: [courseOfferingId], references: [id])
   User             User?                       @relation(fields: [userId], references: [id])
   userId           String?                     @db.Char(255)
+  createdAt        DateTime                    @default(now())
+  updatedAt        DateTime                    @updatedAt
 }
 
 enum TeacherStatusEnum {
@@ -237,6 +257,8 @@ model Teacher {
   userId                  String
   user                    User                      @relation(fields: [userId], references: [id])
   TeacherCourseAssignment TeacherCourseAssignment[]
+  createdAt               DateTime                  @default(now())
+  updatedAt               DateTime                  @updatedAt
 }
 
 enum TeacherCourseAssignmentStatusEnum {
@@ -255,6 +277,8 @@ model TeacherCourseAssignment {
   grade            String
   teacher          Teacher                           @relation(fields: [teacherId], references: [id])
   course           CourseOffering                    @relation(fields: [courseOfferingId], references: [id])
+  createdAt        DateTime                          @default(now())
+  updatedAt        DateTime                          @updatedAt
 }
 
 enum ActivityTypeEnum {
@@ -304,4 +328,6 @@ model Activity {
   serverOrigin String
   userId       String
   user         User             @relation(fields: [userId], references: [id])
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
 }
