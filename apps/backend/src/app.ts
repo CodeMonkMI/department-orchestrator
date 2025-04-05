@@ -4,6 +4,7 @@ import express, { Express, Request, Response } from "express";
 import morgan from "morgan";
 import "reflect-metadata";
 import { AuthController } from "./controllers/auth.controller";
+import { RoleController } from "./controllers/role.controller";
 import { UserController } from "./controllers/user.controller";
 import registerController from "./lib/core/controller/registerControllers";
 
@@ -33,7 +34,7 @@ export function createApp() {
     console.log("object");
   });
 
-  registerController(app, [UserController, AuthController]);
+  registerController(app, [UserController, AuthController, RoleController]);
 
   // 404 not found handler
   app.use((_req, res: Response) => {
