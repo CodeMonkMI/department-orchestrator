@@ -49,5 +49,7 @@ export type IBaseService<TDelegate> = {
       "update"
     >
   >;
-  delete(id: ID): Promise<Prisma.Result<TDelegate, { id: ID }, "delete">>;
+  delete(
+    id: ID
+  ): Promise<Prisma.Result<TDelegate, { id: ID }, "delete"> | null | undefined>;
 };

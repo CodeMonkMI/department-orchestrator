@@ -86,9 +86,13 @@ export abstract class BaseService<TDelegate>
       throw new Error(`[Base service] Create - failed `);
     }
   }
-  delete(id: ID): Promise<Prisma.Result<TDelegate, { id: ID }, "delete">> {
+  async delete(id: ID): Promise<null | undefined> {
     try {
-      return this.repository.delete(id);
+      const find = await this.findByID(id);
+      if (!find) {
+        return;
+      }
+      await this.repository.delete(id);
     } catch (error) {
       throw new Error(`[Base service] Create - failed `);
     }

@@ -1,5 +1,10 @@
 import { Controller } from "@/lib/core/decorator/controller.decorator";
-import { GET, POST } from "@/lib/core/decorator/router.decorator";
+import {
+  DELETE,
+  GET,
+  PATCH,
+  POST,
+} from "@/lib/core/decorator/router.decorator";
 import { UserSchema } from "@/schema/user.schema";
 import { UserService } from "@/services/user.service";
 import { NextFunction, Request, Response } from "express";
@@ -43,6 +48,36 @@ export class UserController {
       return res
         .status(200)
         .json({ message: "User find successfully", data: newData });
+    } catch (error) {
+      return next(error);
+    }
+  }
+  @PATCH("/:id")
+  async update(req: Request, res: Response, next: NextFunction) {
+    try {
+      const result = this.schema.updateUserDTO().safeParse(req.body);
+      const id = req.params.id;
+      if (!result.success) {
+        return res.status(400).json(result.error.errors);
+      }
+
+      const newData = await this.userService.update(id, result.data);
+      return res
+        .status(200)
+        .json({ message: "User updated successfully", data: newData });
+    } catch (error) {
+      return next(error);
+    }
+  }
+  @DELETE("/:id")
+  async remove(req: Request, res: Response, next: NextFunction) {
+    try {
+      const id = req.params.id;
+
+      await this.userService.delete(id);
+      return res
+        .status(204)
+        .json({ message: "User updated successfully", data: null });
     } catch (error) {
       return next(error);
     }

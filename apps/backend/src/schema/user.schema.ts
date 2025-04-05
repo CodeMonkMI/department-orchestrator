@@ -33,6 +33,16 @@ export class UserSchema {
       title: z.string({ message: "Title is required!" }),
     });
   }
+  public updateUserDTO() {
+    return z
+      .object({
+        fullname: z.string({ message: "Name must be string" }).optional(),
+        title: z
+          .string({ message: "Title is required!" })
+          .min(1, { message: "Title is required!" }),
+      })
+      .partial();
+  }
 
   public static getInstance() {
     if (!UserSchema.instance) {
