@@ -16,7 +16,7 @@ export class UserSelector extends BaseSelector<Prisma.UserDelegate> {
       email: true,
       title: true,
       password: false,
-      Role: true,
+      role: true,
     };
   }
 }

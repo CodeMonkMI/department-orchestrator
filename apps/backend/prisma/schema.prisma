@@ -32,17 +32,17 @@ model User {
   username          String              @unique @db.VarChar(255)
   password          String              @db.VarChar(255)
   title             String              @db.VarChar(255)
-  Role              Role?               @relation(fields: [roleId], references: [id])
+  role              Role?               @relation(fields: [roleId], references: [id])
   roleId            String?
-  CourseOffering    CourseOffering[]
-  StudentEnrollment StudentEnrollment[]
-  AttendanceRecord  AttendanceRecord[]
-  Report            Report[]
-  Activity          Activity[]
-  Student           Student[]
-  Teacher           Teacher[]
-  TaskForMe         Task[]              @relation("TaskAssignee")
-  TaskAssignedByMe  Task[]              @relation("TaskAssigner")
+  courseOffering    CourseOffering[]
+  studentEnrollment StudentEnrollment[]
+  attendance        AttendanceRecord[]
+  report            Report[]
+  activity          Activity[]
+  student           Student[]
+  teacher           Teacher[]
+  taskForMe         Task[]              @relation("TaskAssignee")
+  taskAssignedByMe  Task[]              @relation("TaskAssigner")
   createdAt         DateTime            @default(now())
   updatedAt         DateTime            @updatedAt
 }
@@ -92,7 +92,7 @@ model CourseOffering {
   schedules           CourseSchedule[]
   enrollments         StudentEnrollment[]
   attendances         AttendanceRecord[]
-  User                User?                     @relation(fields: [userId], references: [id])
+  user                User?                     @relation(fields: [userId], references: [id])
   userId              String?                   @db.Char(255)
   createdAt           DateTime                  @default(now())
   updatedAt           DateTime                  @updatedAt
@@ -107,15 +107,15 @@ enum RoomTypeEnum {
 }
 
 model Room {
-  id             String           @id @default(cuid())
-  name           String
-  code           String
-  description    String?
-  capacity       Int              @default(30)
-  type           RoomTypeEnum     @default(ClASSROOM)
-  CourseSchedule CourseSchedule[]
-  createdAt      DateTime         @default(now())
-  updatedAt      DateTime         @updatedAt
+  id          String           @id @default(cuid())
+  name        String
+  code        String
+  description String?
+  capacity    Int              @default(30)
+  type        RoomTypeEnum     @default(ClASSROOM)
+  schedule    CourseSchedule[]
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
 }
 
 model CourseSchedule {
@@ -208,9 +208,11 @@ enum StudentStatusEnum {
 model Student {
   id             String              @id @default(cuid())
   userId         String
-  enrollmentDate DateTime            @db.Date
+  startingDate   DateTime            @db.Date
   status         StudentStatusEnum   @default(ACTIVE)
   session        String
+  rollNumber     String
+  registrationNo String
   graduationYear Int
   user           User                @relation(fields: [userId], references: [id])
   courses        StudentEnrollment[]
@@ -234,7 +236,7 @@ model StudentEnrollment {
   grade            String
   student          Student                     @relation(fields: [studentId], references: [id])
   course           CourseOffering              @relation(fields: [courseOfferingId], references: [id])
-  User             User?                       @relation(fields: [userId], references: [id])
+  user             User?                       @relation(fields: [userId], references: [id])
   userId           String?                     @db.Char(255)
   createdAt        DateTime                    @default(now())
   updatedAt        DateTime                    @updatedAt
@@ -249,16 +251,16 @@ enum TeacherStatusEnum {
 }
 
 model Teacher {
-  id                      String                    @id @default(cuid())
-  title                   String
-  status                  TeacherStatusEnum         @default(ACTIVE)
-  joinDate                DateTime                  @db.Date
-  officeLocation          String
-  userId                  String
-  user                    User                      @relation(fields: [userId], references: [id])
-  TeacherCourseAssignment TeacherCourseAssignment[]
-  createdAt               DateTime                  @default(now())
-  updatedAt               DateTime                  @updatedAt
+  id               String                    @id @default(cuid())
+  title            String
+  status           TeacherStatusEnum         @default(ACTIVE)
+  joinDate         DateTime                  @db.Date
+  officeLocation   String
+  userId           String
+  user             User                      @relation(fields: [userId], references: [id])
+  courseAssignment TeacherCourseAssignment[]
+  createdAt        DateTime                  @default(now())
+  updatedAt        DateTime                  @updatedAt
 }
 
 enum TeacherCourseAssignmentStatusEnum {

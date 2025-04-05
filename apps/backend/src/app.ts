@@ -5,6 +5,7 @@ import morgan from "morgan";
 import "reflect-metadata";
 import { AuthController } from "./controllers/auth.controller";
 import { RoleController } from "./controllers/role.controller";
+import { StudentController } from "./controllers/student.controller";
 import { UserController } from "./controllers/user.controller";
 import registerController from "./lib/core/controller/registerControllers";
 
@@ -34,7 +35,12 @@ export function createApp() {
     console.log("object");
   });
 
-  registerController(app, [UserController, AuthController, RoleController]);
+  registerController(app, [
+    UserController,
+    AuthController,
+    RoleController,
+    StudentController,
+  ]);
 
   // 404 not found handler
   app.use((_req, res: Response) => {
