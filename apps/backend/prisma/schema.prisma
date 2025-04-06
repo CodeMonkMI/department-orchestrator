@@ -256,7 +256,7 @@ model Teacher {
   status           TeacherStatusEnum         @default(ACTIVE)
   joinDate         DateTime                  @db.Date
   officeLocation   String
-  userId           String
+  userId           String                    @unique
   user             User                      @relation(fields: [userId], references: [id])
   courseAssignment TeacherCourseAssignment[]
   createdAt        DateTime                  @default(now())

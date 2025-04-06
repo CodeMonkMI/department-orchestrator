@@ -6,6 +6,7 @@ import "reflect-metadata";
 import { AuthController } from "./controllers/auth.controller";
 import { RoleController } from "./controllers/role.controller";
 import { StudentController } from "./controllers/student.controller";
+import { TeacherController } from "./controllers/teacher.controller";
 import { UserController } from "./controllers/user.controller";
 import registerController from "./lib/core/controller/registerControllers";
 
@@ -40,6 +41,7 @@ export function createApp() {
     AuthController,
     RoleController,
     StudentController,
+    TeacherController,
   ]);
 
   // 404 not found handler
