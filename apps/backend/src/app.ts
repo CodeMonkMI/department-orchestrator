@@ -6,7 +6,9 @@ import "reflect-metadata";
 import { AuthController } from "./controllers/auth.controller";
 import { CourseController } from "./controllers/course.controller";
 import { CourseOfferingController } from "./controllers/courseOffering.controller";
+import { CourseScheduleController } from "./controllers/courseSchedule.controller";
 import { RoleController } from "./controllers/role.controller";
+import { RoomController } from "./controllers/room.controller";
 import { SemesterController } from "./controllers/semester.controller";
 import { StudentController } from "./controllers/student.controller";
 import { StudentEnrollmentController } from "./controllers/StudentEnrollment.controller";
@@ -50,6 +52,8 @@ export function createApp() {
     CourseController,
     CourseOfferingController,
     StudentEnrollmentController,
+    RoomController,
+    CourseScheduleController,
   ]);
 
   // 404 not found handler

@@ -41,7 +41,8 @@ export class CourseOfferingSchema {
             courseId: data.courseId,
             semesterId: data.semesterId,
           });
-          if (!findCourse) return data;
+          console.log(findCourse);
+          if (findCourse.length === 0) return true;
           return false;
         },
         {

@@ -114,7 +114,7 @@ enum RoomTypeEnum {
 model Room {
   id          String           @id @default(cuid())
   name        String
-  code        String
+  code        String           @unique
   description String?
   capacity    Int              @default(30)
   type        RoomTypeEnum     @default(ClASSROOM)
@@ -123,12 +123,20 @@ model Room {
   updatedAt   DateTime         @updatedAt
 }
 
+enum DayOfWeekEnum {
+  SUNDAY
+  MONDAY
+  TUESDAY
+  WEDNESDAY
+  THURSDAY
+}
+
 model CourseSchedule {
   id               String         @id @default(cuid())
   courseOfferingId String
-  dayOfWeek        String
-  startTime        DateTime       @db.Time()
-  endTime          DateTime       @db.Time()
+  dayOfWeek        DayOfWeekEnum  @default(SUNDAY)
+  startTime        String         @db.VarChar(5)
+  endTime          String         @db.VarChar(5)
   roomId           String
   room             Room           @relation(fields: [roomId], references: [id])
   courseOffering   CourseOffering @relation(fields: [courseOfferingId], references: [id])
