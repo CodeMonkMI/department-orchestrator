@@ -4,8 +4,12 @@ import express, { Express, Request, Response } from "express";
 import morgan from "morgan";
 import "reflect-metadata";
 import { AuthController } from "./controllers/auth.controller";
+import { CourseController } from "./controllers/course.controller";
+import { CourseOfferingController } from "./controllers/courseOffering.controller";
 import { RoleController } from "./controllers/role.controller";
+import { SemesterController } from "./controllers/semester.controller";
 import { StudentController } from "./controllers/student.controller";
+import { StudentEnrollmentController } from "./controllers/StudentEnrollment.controller";
 import { TeacherController } from "./controllers/teacher.controller";
 import { UserController } from "./controllers/user.controller";
 import registerController from "./lib/core/controller/registerControllers";
@@ -42,6 +46,10 @@ export function createApp() {
     RoleController,
     StudentController,
     TeacherController,
+    SemesterController,
+    CourseController,
+    CourseOfferingController,
+    StudentEnrollmentController,
   ]);
 
   // 404 not found handler

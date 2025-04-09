@@ -26,25 +26,24 @@ model Role {
 }
 
 model User {
-  id                String              @id @default(cuid())
-  fullname          String?             @db.VarChar(255)
-  email             String              @unique @db.VarChar(255)
-  username          String              @unique @db.VarChar(255)
-  password          String              @db.VarChar(255)
-  title             String              @db.VarChar(255)
-  role              Role?               @relation(fields: [roleId], references: [id])
-  roleId            String?
-  courseOffering    CourseOffering[]
-  studentEnrollment StudentEnrollment[]
-  attendance        AttendanceRecord[]
-  report            Report[]
-  activity          Activity[]
-  student           Student[]
-  teacher           Teacher[]
-  taskForMe         Task[]              @relation("TaskAssignee")
-  taskAssignedByMe  Task[]              @relation("TaskAssigner")
-  createdAt         DateTime            @default(now())
-  updatedAt         DateTime            @updatedAt
+  id               String             @id @default(cuid())
+  fullname         String?            @db.VarChar(255)
+  email            String             @unique @db.VarChar(255)
+  username         String             @unique @db.VarChar(255)
+  password         String             @db.VarChar(255)
+  title            String             @db.VarChar(255)
+  role             Role?              @relation(fields: [roleId], references: [id])
+  roleId           String?
+  courseOffering   CourseOffering[]
+  attendance       AttendanceRecord[]
+  report           Report[]
+  activity         Activity[]
+  student          Student?
+  teacher          Teacher?
+  taskForMe        Task[]             @relation("TaskAssignee")
+  taskAssignedByMe Task[]             @relation("TaskAssigner")
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
 }
 
 enum SemesterTypeEnum {
@@ -70,14 +69,20 @@ enum CourseTypeEnum {
 
 model Course {
   id          String           @id @default(cuid())
-  code        String
+  code        String           @unique
   type        CourseTypeEnum   @default(REQUIRED)
   name        String
-  description String
+  description String?
   credits     Int
   offerings   CourseOffering[]
   createdAt   DateTime         @default(now())
   updatedAt   DateTime         @updatedAt
+}
+
+enum CourseOfferingStatus {
+  ACTIVE
+  INACTIVE
+  REVOKED
 }
 
 model CourseOffering {
@@ -85,7 +90,7 @@ model CourseOffering {
   courseId            String
   semesterId          String
   courseAssignmentIds String[]
-  status              String
+  status              CourseOfferingStatus      @default(ACTIVE)
   semester            Semester                  @relation(fields: [semesterId], references: [id])
   course              Course                    @relation(fields: [courseId], references: [id])
   courseAssignment    TeacherCourseAssignment[]
@@ -207,7 +212,7 @@ enum StudentStatusEnum {
 
 model Student {
   id             String              @id @default(cuid())
-  userId         String
+  userId         String              @unique
   startingDate   DateTime            @db.Date
   status         StudentStatusEnum   @default(ACTIVE)
   session        String
@@ -233,11 +238,9 @@ model StudentEnrollment {
   courseOfferingId String
   enrollmentDate   DateTime                    @db.Date
   status           StudentEnrollmentStatusEnum @default(ENROLLED)
-  grade            String
+  grade            String?
   student          Student                     @relation(fields: [studentId], references: [id])
   course           CourseOffering              @relation(fields: [courseOfferingId], references: [id])
-  user             User?                       @relation(fields: [userId], references: [id])
-  userId           String?                     @db.Char(255)
   createdAt        DateTime                    @default(now())
   updatedAt        DateTime                    @updatedAt
 }
