@@ -3,16 +3,20 @@ import dotenv from "dotenv";
 import express, { Express, Request, Response } from "express";
 import morgan from "morgan";
 import "reflect-metadata";
+import { AttendanceRecordController } from "./controllers/attendanceRecord.controller";
 import { AuthController } from "./controllers/auth.controller";
 import { CourseController } from "./controllers/course.controller";
 import { CourseOfferingController } from "./controllers/courseOffering.controller";
 import { CourseScheduleController } from "./controllers/courseSchedule.controller";
+import { ReportController } from "./controllers/report.controller";
 import { RoleController } from "./controllers/role.controller";
 import { RoomController } from "./controllers/room.controller";
 import { SemesterController } from "./controllers/semester.controller";
 import { StudentController } from "./controllers/student.controller";
 import { StudentEnrollmentController } from "./controllers/StudentEnrollment.controller";
+import { TaskController } from "./controllers/task.controller";
 import { TeacherController } from "./controllers/teacher.controller";
+import { TeacherCourseAssignmentController } from "./controllers/teacherCourseAssignment.controller";
 import { UserController } from "./controllers/user.controller";
 import registerController from "./lib/core/controller/registerControllers";
 
@@ -54,6 +58,10 @@ export function createApp() {
     StudentEnrollmentController,
     RoomController,
     CourseScheduleController,
+    AttendanceRecordController,
+    ReportController,
+    TeacherCourseAssignmentController,
+    TaskController,
   ]);
 
   // 404 not found handler

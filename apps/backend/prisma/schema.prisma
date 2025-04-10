@@ -156,8 +156,8 @@ model AttendanceRecord {
   userId           String
   date             DateTime             @db.Date
   status           AttendanceStatusEnum @default(PRESENT)
-  checkInTime      DateTime             @db.Time()
-  checkOutTime     DateTime             @db.Time()
+  checkInTime      String
+  checkOutTime     String
   courseOfferingId String
   notes            String?
   user             User                 @relation(fields: [userId], references: [id])
