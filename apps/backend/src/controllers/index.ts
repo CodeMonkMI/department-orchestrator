@@ -1,0 +1,15 @@
+export { AttendanceRecordController } from "./attendanceRecord.controller";
+export { AuthController } from "./auth.controller";
+export { CourseController } from "./course.controller";
+export { CourseOfferingController } from "./courseOffering.controller";
+export { CourseScheduleController } from "./courseSchedule.controller";
+export { ReportController } from "./report.controller";
+export { RoleController } from "./role.controller";
+export { RoomController } from "./room.controller";
+export { SemesterController } from "./semester.controller";
+export { StudentController } from "./student.controller";
+export { StudentEnrollmentController } from "./StudentEnrollment.controller";
+export { TaskController } from "./task.controller";
+export { TeacherController } from "./teacher.controller";
+export { TeacherCourseAssignmentController } from "./teacherCourseAssignment.controller";
+export { UserController } from "./user.controller";
