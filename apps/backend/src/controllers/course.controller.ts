@@ -75,7 +75,7 @@ export class CourseController {
       }
 
       const newData = await this.courseService.update(id, parsedData.data);
-      return res.status(200).json(newData);
+      return res.status(202).json(newData);
     } catch (error) {
       return next(error);
     }

@@ -32,9 +32,7 @@ export class UserController {
       }
 
       const newData = await this.userService.create(result.data);
-      return res
-        .status(201)
-        .json({ message: "User created successfully", data: newData });
+      return res.status(201).json(newData);
     } catch (error) {
       return next(error);
     }
@@ -45,9 +43,7 @@ export class UserController {
       const id = req.params.id;
 
       const newData = await this.userService.findByID(id);
-      return res
-        .status(200)
-        .json({ message: "User find successfully", data: newData });
+      return res.status(200).json(newData);
     } catch (error) {
       return next(error);
     }
@@ -62,9 +58,7 @@ export class UserController {
       }
 
       const newData = await this.userService.update(id, result.data);
-      return res
-        .status(200)
-        .json({ message: "User updated successfully", data: newData });
+      return res.status(200).json(newData);
     } catch (error) {
       return next(error);
     }

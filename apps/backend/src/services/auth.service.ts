@@ -46,8 +46,7 @@ export class AuthService extends BaseService<Prisma.UserDelegate> {
       });
 
       const resData = {
-        message: "Login successful!",
-        data: { token },
+        token,
       };
       return resData;
     } catch (error) {

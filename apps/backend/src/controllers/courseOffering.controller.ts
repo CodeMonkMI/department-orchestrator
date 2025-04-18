@@ -38,8 +38,17 @@ export class CourseOfferingController {
         return res.status(400).json(parsedData.error.errors);
       }
 
+      const findCourse = await this.courseOfferingService.find({
+        courseId: parsedData.data.courseId,
+        semesterId: parsedData.data.semesterId,
+      });
+
+      if (findCourse.length > 0) {
+        return res.status(201).json(findCourse[0]);
+      }
+
       const newData = await this.courseOfferingService.create(parsedData.data);
-      return res.status(200).json(newData);
+      return res.status(201).json(newData);
     } catch (error) {
       return next(error);
     }
@@ -60,7 +69,7 @@ export class CourseOfferingController {
         id,
         parsedData.data
       );
-      return res.status(200).json(newData);
+      return res.status(202).json(newData);
     } catch (error) {
       return next(error);
     }

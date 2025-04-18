@@ -39,7 +39,7 @@ export class SemesterController {
       }
 
       const newData = await this.semesterService.create(parsedData.data);
-      return res.status(200).json(newData);
+      return res.status(201).json(newData);
     } catch (error) {
       return next(error);
     }
@@ -62,7 +62,7 @@ export class SemesterController {
         );
 
       const newData = await this.semesterService.update(id, parsedData.data);
-      return res.status(200).json(newData);
+      return res.status(202).json(newData);
     } catch (error) {
       return next(error);
     }

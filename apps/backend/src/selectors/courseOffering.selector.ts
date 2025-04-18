@@ -11,35 +11,9 @@ export class CourseOfferingSelector extends BaseSelector<Prisma.CourseOfferingDe
     return {
       id: true,
       status: true,
-      semester: {
-        select: {
-          name: true,
-          type: true,
-        },
-      },
-      course: {
-        select: {
-          code: true,
-          name: true,
-          type: true,
-          credits: true,
-          description: true,
-        },
-      },
-      courseAssignment: {
-        select: {
-          teacher: {
-            select: {
-              title: true,
-              user: {
-                select: {
-                  fullname: true,
-                },
-              },
-            },
-          },
-        },
-      },
+      courseId: true,
+      semesterId: true,
+      courseAssignmentIds: true,
     };
   }
 }

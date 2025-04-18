@@ -57,7 +57,7 @@ export class RoomController {
       }
 
       const newData = await this.roomService.update(id, parsedData.data);
-      return res.status(200).json(newData);
+      return res.status(202).json(newData);
     } catch (error) {
       return next(error);
     }

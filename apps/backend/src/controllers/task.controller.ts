@@ -56,7 +56,7 @@ export class TaskController {
       }
 
       const newData = await this.taskService.update(id, parsedData.data);
-      return res.status(200).json(newData);
+      return res.status(202).json(newData);
     } catch (error) {
       return next(error);
     }

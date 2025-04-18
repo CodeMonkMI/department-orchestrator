@@ -9,7 +9,8 @@
   "scripts": {
     "dev": "pnpm -r dev",
     "build": "pnpm -r build",
-    "start": "pnpm -r start"
+    "start": "pnpm -r start",
+    "db:up": "docker-compose -f docker/docker-compose.yaml up -d"
   },
   "engines": {
     "node": ">=18.0.0"
