@@ -1,5 +1,7 @@
 import { Controller } from "@/lib/core/decorator/controller.decorator";
+import { Use } from "@/lib/core/decorator/middleware.decorator";
 import { DELETE, GET, POST, PUT } from "@/lib/core/decorator/router.decorator";
+import { authMiddleware } from "@/middleware/passport/passport";
 import { StudentEnrollmentSchema } from "@/schema/studentEnrolement.schema";
 import { StudentService } from "@/services/student.service";
 import { StudentEnrollmentService } from "@/services/StudentEnrollment.service";
@@ -8,6 +10,7 @@ import { autoInjectable } from "tsyringe";
 
 @autoInjectable()
 @Controller("/api/v1/student-enrollment")
+@Use(authMiddleware.authenticate)
 export class StudentEnrollmentController {
   constructor(
     readonly studentEnrollmentService: StudentEnrollmentService,

@@ -1,10 +1,12 @@
 import { Controller } from "@/lib/core/decorator/controller.decorator";
+import { Use } from "@/lib/core/decorator/middleware.decorator";
 import {
   DELETE,
   GET,
   PATCH,
   POST,
 } from "@/lib/core/decorator/router.decorator";
+import { authMiddleware } from "@/middleware/passport/passport";
 import { RoleSchema } from "@/schema/role.schema";
 import { RoleService } from "@/services/role.service";
 import { NextFunction, Request, Response } from "express";
@@ -12,6 +14,7 @@ import { autoInjectable } from "tsyringe";
 
 @autoInjectable()
 @Controller("/api/v1/role")
+@Use(authMiddleware.authenticate)
 export class RoleController {
   constructor(readonly roleService: RoleService, readonly schema: RoleSchema) {}
 
@@ -27,6 +30,7 @@ export class RoleController {
   }
 
   @POST("/")
+  @Use(authMiddleware.isSuperAdmin)
   async create(req: Request, res: Response, next: NextFunction) {
     try {
       const parsedData = this.schema.roleDTO().safeParse(req.body);
@@ -46,6 +50,7 @@ export class RoleController {
     }
   }
   @PATCH("/:id")
+  @Use(authMiddleware.isSuperAdmin)
   async update(req: Request, res: Response, next: NextFunction) {
     try {
       const parsedData = this.schema.roleUpdateDTO().safeParse(req.body);
@@ -63,6 +68,7 @@ export class RoleController {
     }
   }
   @DELETE("/:id")
+  @Use(authMiddleware.isSuperAdmin)
   async remove(req: Request, res: Response, next: NextFunction) {
     try {
       const id = req.params.id;

@@ -1,10 +1,12 @@
 import { Controller } from "@/lib/core/decorator/controller.decorator";
+import { Use } from "@/lib/core/decorator/middleware.decorator";
 import {
   DELETE,
   GET,
   PATCH,
   POST,
 } from "@/lib/core/decorator/router.decorator";
+import { authMiddleware } from "@/middleware/passport/passport";
 import { TeacherCourseAssignmentSchema } from "@/schema/teacherCourseAssignment.schema";
 import { TeacherCourseAssignmentService } from "@/services/teacherCourseAssignment.service";
 import { NextFunction, Request, Response } from "express";
@@ -12,6 +14,7 @@ import { autoInjectable } from "tsyringe";
 
 @autoInjectable()
 @Controller("/api/v1/teacher-course-assignment")
+@Use(authMiddleware.authenticate)
 export class TeacherCourseAssignmentController {
   constructor(
     readonly teacherCourseAssignmentService: TeacherCourseAssignmentService,

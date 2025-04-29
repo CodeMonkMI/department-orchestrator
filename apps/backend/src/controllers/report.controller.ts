@@ -1,5 +1,7 @@
 import { Controller } from "@/lib/core/decorator/controller.decorator";
+import { Use } from "@/lib/core/decorator/middleware.decorator";
 import { GET } from "@/lib/core/decorator/router.decorator";
+import { authMiddleware } from "@/middleware/passport/passport";
 import { ReportSchema } from "@/schema/report.schema";
 import { ReportService } from "@/services/report.service";
 import { NextFunction, Request, Response } from "express";
@@ -7,6 +9,7 @@ import { autoInjectable } from "tsyringe";
 
 @autoInjectable()
 @Controller("/api/v1/report")
+@Use(authMiddleware.authenticate)
 export class ReportController {
   constructor(
     readonly reportService: ReportService,

@@ -6,22 +6,19 @@ import {
   PATCH,
   POST,
 } from "@/lib/core/decorator/router.decorator";
-import { PassportMiddleware } from "@/middleware/passport/passport";
+import { authMiddleware } from "@/middleware/passport/passport";
 import { UserSchema } from "@/schema/user.schema";
 import { UserService } from "@/services/user.service";
 import { NextFunction, Request, Response } from "express";
-import { autoInjectable, container } from "tsyringe";
-
-const passport = container.resolve(PassportMiddleware);
+import { autoInjectable } from "tsyringe";
 
 @autoInjectable()
 @Controller("/api/v1/user")
-@Use(passport.authenticate)
+@Use(authMiddleware.authenticate)
 export class UserController {
   constructor(readonly userService: UserService, readonly schema: UserSchema) {}
 
   @GET("/")
-  @Use(passport.isSuperAdmin)
   async find(req: Request, res: Response, _next: NextFunction) {
     console.log(req.user);
 

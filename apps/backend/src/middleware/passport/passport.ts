@@ -99,3 +99,5 @@ export class PassportMiddleware {
     }
   }
 }
+
+export const authMiddleware = container.resolve(PassportMiddleware);
