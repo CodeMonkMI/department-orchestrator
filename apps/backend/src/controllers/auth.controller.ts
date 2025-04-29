@@ -19,14 +19,17 @@ export class AuthController {
   async login(req: Request, res: Response, next: NextFunction) {
     try {
       // validate data
-      const parsedData = this.schema.loginDTO().safeParse(req.body);
+      // validate data
+      const parsedData = await this.schema.loginDTO().safeParseAsync(req.body);
+
       if (!parsedData.success) {
         return res.status(400).json(parsedData.error.errors);
       }
 
-      const resData = await this.userService.login(parsedData.data);
-      return res.status(200).json(resData);
+      const token = await this.userService.login(parsedData.data);
+      return res.status(200).json({ token });
     } catch (error) {
+      console.log(error);
       return next(error);
     }
   }

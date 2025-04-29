@@ -4,7 +4,6 @@ import { UserRepository } from "@/repository/user.repository";
 import { AuthSchema } from "@/schema/auth.schema";
 import { UserSelector } from "@/selectors/user.selector";
 import { Prisma } from "@prisma/client";
-import bcrypt from "bcryptjs";
 import { autoInjectable } from "tsyringe";
 import { z } from "zod";
 
@@ -21,34 +20,17 @@ export class AuthService extends BaseService<Prisma.UserDelegate> {
   async login(data: z.infer<ReturnType<typeof this.schema.loginDTO>>) {
     try {
       // check if user exists
-      const findUser = await this.repository.findOne({
-        where: {
-          email: data.email,
-        },
+      const findUser = await this.findOne({
+        email: data.email,
       });
-      if (!findUser) {
-        throw this.generateError("Invalid username or password!", 400);
-      }
-
-      const isPasswordValid = bcrypt.compareSync(
-        data.password,
-        findUser.password
-      );
-
-      if (!isPasswordValid) {
-        throw this.generateError("Invalid username or password!", 400);
-      }
 
       const token = this.token.generateToken({
-        id: findUser.id,
-        email: findUser.email,
-        username: findUser.username,
+        id: findUser!.id,
+        email: findUser!.email,
+        username: findUser!.username,
       });
 
-      const resData = {
-        token,
-      };
-      return resData;
+      return token;
     } catch (error) {
       if (error && (error as any)?.statusCode) {
         throw error;

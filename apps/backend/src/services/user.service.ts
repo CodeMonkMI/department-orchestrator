@@ -56,6 +56,13 @@ export class UserService extends BaseService<UserDelegate> {
       throw this.generateError(`[User service] Create - failed`);
     }
   }
+
+  async findWithPassword(email: string) {
+    // check if user exists
+    return this.repository.findOne({
+      where: { email },
+    });
+  }
 }
 
 export const UserServiceToken = Symbol("UserServiceToken");
