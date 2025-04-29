@@ -21,8 +21,10 @@ export class UserController {
   constructor(readonly userService: UserService, readonly schema: UserSchema) {}
 
   @GET("/")
-  async find(_req: Request, res: Response, _next: NextFunction) {
-    console.log("user controller find");
+  @Use(passport.isSuperAdmin)
+  async find(req: Request, res: Response, _next: NextFunction) {
+    console.log(req.user);
+
     const data = await this.userService.find();
     return res.status(200).json(data);
   }

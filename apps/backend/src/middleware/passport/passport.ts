@@ -59,22 +59,43 @@ export class PassportMiddleware {
     passport.use(new Strategy(opts, this.verifyUser(this.userService)));
   }
 
-  async getUserData(id: string): Promise<any> {
-    return this.userService.findByID(id);
-  }
-
   async authenticate(req: Request, res: Response, next: NextFunction) {
-    passport.authenticate("jwt", (err: any, user: any, info: any) => {
+    passport.authenticate("jwt", (err: any, data: any, info: any) => {
       if (err) {
         return next(err);
       }
-      if (!user) {
+      if (!data) {
         return res.status(401).json({
           message: "Unauthorized!",
         });
       }
-      req.user = user;
+
+      req.user = data.user;
       return next();
     })(req, res, next);
+  }
+
+  isAdmin(req: Request, res: Response, next: NextFunction): void {
+    try {
+      const role = (req as any).user?.role.role;
+      if (role === "admin" || role === "super_admin") {
+        return next();
+      }
+      res.status(401).json({
+        message: "You are not authorize to perform this action!",
+      });
+    } catch (error) {
+      return next(error);
+    }
+  }
+  async isSuperAdmin(req: Request<any>, res: Response, next: NextFunction) {
+    try {
+      if ((req as any).user?.role.role === "super_admin") return next();
+      res.status(401).json({
+        message: "You are not authorize to perform this action!",
+      });
+    } catch (error) {
+      return next(error);
+    }
   }
 }
