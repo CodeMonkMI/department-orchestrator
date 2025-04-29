@@ -1,17 +1,22 @@
 import { Controller } from "@/lib/core/decorator/controller.decorator";
+import { Use } from "@/lib/core/decorator/middleware.decorator";
 import {
   DELETE,
   GET,
   PATCH,
   POST,
 } from "@/lib/core/decorator/router.decorator";
+import { PassportMiddleware } from "@/middleware/passport/passport";
 import { UserSchema } from "@/schema/user.schema";
 import { UserService } from "@/services/user.service";
 import { NextFunction, Request, Response } from "express";
-import { autoInjectable } from "tsyringe";
+import { autoInjectable, container } from "tsyringe";
+
+const passport = container.resolve(PassportMiddleware);
 
 @autoInjectable()
 @Controller("/api/v1/user")
+@Use(passport.authenticate)
 export class UserController {
   constructor(readonly userService: UserService, readonly schema: UserSchema) {}
 

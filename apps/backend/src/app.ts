@@ -2,9 +2,12 @@ import cors from "cors";
 import dotenv from "dotenv";
 import express, { Express, Request, Response } from "express";
 import morgan from "morgan";
+import passport from "passport";
 import "reflect-metadata";
+import { container } from "tsyringe";
 import * as controllers from "./controllers";
 import registerController from "./lib/core/controller/registerControllers";
+import { PassportMiddleware } from "./middleware/passport/passport";
 
 dotenv.config({
   path: ".env",
@@ -18,6 +21,10 @@ export function createApp() {
   app.use(morgan("dev"));
   app.use(express.urlencoded({ extended: true }));
   app.use(express.json());
+
+  // initialize passport
+  app.use(passport.initialize());
+  container.resolve(PassportMiddleware).init();
 
   // health route
   app.get("/health", (req: Request, res: Response): any => {
