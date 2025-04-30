@@ -1,5 +1,5 @@
 "use client";
-import Header from "@/components/layout/Header";
+import Header from "@/components/layout/Header/Header";
 import Sidebar from "@/components/layout/Sidebar";
 import { useAuthContext } from "@/store/auth/AuthProvider";
 import { useRouter } from "next/navigation";
@@ -12,7 +12,7 @@ type LayoutProps = {
 const Layout = ({ children }: LayoutProps) => {
   const router = useRouter();
   const { isAuthenticated, isHydrated, user } = useAuthContext();
-  if (!isAuthenticated) {
+  if (router && !isAuthenticated) {
     router.push("/login");
     return null;
   }
