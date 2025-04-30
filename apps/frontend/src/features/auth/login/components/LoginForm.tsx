@@ -3,39 +3,55 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
+import { useLogin } from "@/lib/api/authApi";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { AxiosError } from "axios";
 import { ArrowRight, Lock, User } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
-
-const LoginSchema = z.object({
-  email: z.string().min(1, { message: "Email is required!" }),
-  password: z.string().min(1, { message: "Password is required!" }),
-});
-
-type ProfileFormValues = z.infer<typeof LoginSchema>;
+import { LoginFormValues, LoginSchema, ZodError } from "../type";
 
 export function LoginForm() {
   const {
     register,
     formState: { errors, isLoading },
-    reset,
     handleSubmit,
-  } = useForm<ProfileFormValues>({
+    setError,
+  } = useForm<LoginFormValues>({
     resolver: zodResolver(LoginSchema),
   });
   const { toast } = useToast();
   const router = useRouter(); // Changed from useNavigate
 
-  function submitHandler(data: ProfileFormValues) {
-    console.log(data);
+  const { mutateAsync: login, isError, error, isSuccess } = useLogin();
+
+  async function submitHandler(data: LoginFormValues) {
+    await login(data);
     toast({
       title: "Profile Updated",
       description: "Your profile information has been updated successfully.",
     });
   }
 
+  useEffect(() => {
+    if (isSuccess) {
+      router.push("/dashboard");
+    }
+  }, [isSuccess]);
+
+  useEffect(() => {
+    if (isError) {
+      if (error instanceof AxiosError) {
+        const errs: ZodError[] = error.response?.data;
+        errs.forEach((item) => {
+          item.path.forEach((field: any) => {
+            setError(field, { message: item.message });
+          });
+        });
+      }
+    }
+  }, [error, isError]);
   return (
     <form onSubmit={handleSubmit(submitHandler)} className="space-y-5">
       <div className="space-y-2">

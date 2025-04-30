@@ -12,14 +12,19 @@ export class AuthSchema {
         email: z
           .string({ message: "Email is required" })
           .min(1, { message: "Email is required" })
-          .refine(
-            async (email) => {
-              const findUser = await this.useService.findOne({ email });
-              if (!findUser) return false;
-              return email;
-            },
-            { message: "Invalid username or password!" }
-          ),
+          .superRefine(async (email, ctx) => {
+            const findUser = await this.useService.findOne({ email });
+            if (!findUser) {
+              ctx.addIssue({
+                code: z.ZodIssueCode.custom,
+                message: "Invalid username or password!",
+                fatal: true,
+                path: ["email", "password"],
+              });
+              return;
+            }
+            return email;
+          }),
         password: z
           .string({ message: "Password is required" })
           .min(1, { message: "Password is required" }),
@@ -33,7 +38,7 @@ export class AuthSchema {
             code: z.ZodIssueCode.custom,
             message: "Invalid username or password!",
             fatal: true,
-            path: ["email", "username"],
+            path: ["email", "password"],
           });
           return;
         }
@@ -47,7 +52,7 @@ export class AuthSchema {
             code: z.ZodIssueCode.custom,
             message: "Invalid username or password!",
             fatal: true,
-            path: ["email", "username"],
+            path: ["email", "password"],
           });
           return;
         }

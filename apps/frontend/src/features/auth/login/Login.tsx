@@ -1,4 +1,4 @@
-import { LoginForm } from "./components/LoginForm";
+import LoginFormContainer from "./components/LoginFormContainer";
 
 const LoginContainer = () => {
   return (
@@ -15,8 +15,7 @@ const LoginContainer = () => {
             Sign in to access your department dashboard
           </p>
         </div>
-
-        <LoginForm />
+        <LoginFormContainer />
 
         <p className="text-sm text-center mt-6 text-muted-foreground">
           Demo credentials: admin@example.com / password
