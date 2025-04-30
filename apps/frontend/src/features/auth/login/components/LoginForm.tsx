@@ -2,8 +2,9 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useToast } from "@/hooks/use-toast";
 import { useLogin } from "@/lib/api/authApi";
+import { authToken } from "@/lib/token/AuthToken";
+import { useAuthContext } from "@/store/auth/AuthProvider";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AxiosError } from "axios";
 import { ArrowRight, Lock, User } from "lucide-react";
@@ -13,6 +14,8 @@ import { useForm } from "react-hook-form";
 import { LoginFormValues, LoginSchema, ZodError } from "../type";
 
 export function LoginForm() {
+  const { setUser } = useAuthContext();
+
   const {
     register,
     formState: { errors, isLoading },
@@ -21,21 +24,20 @@ export function LoginForm() {
   } = useForm<LoginFormValues>({
     resolver: zodResolver(LoginSchema),
   });
-  const { toast } = useToast();
+
   const router = useRouter(); // Changed from useNavigate
 
   const { mutateAsync: login, isError, error, isSuccess } = useLogin();
 
   async function submitHandler(data: LoginFormValues) {
     await login(data);
-    toast({
-      title: "Profile Updated",
-      description: "Your profile information has been updated successfully.",
-    });
   }
 
   useEffect(() => {
     if (isSuccess) {
+      const userData = authToken.decode();
+      setUser(userData);
+
       router.push("/dashboard");
     }
   }, [isSuccess]);
