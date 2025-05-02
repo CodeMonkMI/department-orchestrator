@@ -29,6 +29,11 @@ const Sidebar = () => {
   const menuItems = [
     { path: "/dashboard", name: "Dashboard", icon: <Home size={20} /> },
     {
+      path: "/semester",
+      name: "Semesters",
+      icon: <BookOpen size={20} />,
+    },
+    {
       path: "/courses",
       name: "Courses",
       icon: <BookOpen size={20} />,
