@@ -2,18 +2,23 @@
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
+import {
+  useIsSidebarOpen,
+  useSidebarActions,
+} from "@/store/preference/PreferenceStore";
 import { ChevronLeft, LogOut, Menu } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
-import { menuItems } from "./data/SidebarMenu";
+import { menuItems } from "../data/SidebarMenu";
 
 const Sidebar = () => {
-  const [collapsed, setCollapsed] = useState(false);
+  const collapsed: boolean = useIsSidebarOpen();
+  const actions = useSidebarActions();
+
   const pathname = usePathname();
 
   const toggleSidebar = () => {
-    setCollapsed(!collapsed);
+    actions.toggleSidebar();
   };
 
   return (
