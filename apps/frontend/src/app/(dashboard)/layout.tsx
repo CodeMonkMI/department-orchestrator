@@ -4,12 +4,14 @@ import Sidebar from "@/components/layout/Sidebar";
 import { cn } from "@/lib/utils";
 import { useAuthContext } from "@/store/auth/AuthProvider";
 import { useIsSidebarOpen } from "@/store/preference/PreferenceStore";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import React from "react";
 
 type LayoutProps = {
   children: React.ReactNode;
 };
+const queryClient = new QueryClient();
 
 const Layout = ({ children }: LayoutProps) => {
   const router = useRouter();
@@ -21,7 +23,7 @@ const Layout = ({ children }: LayoutProps) => {
   }
 
   return (
-    <>
+    <QueryClientProvider client={queryClient}>
       <div className="min-h-screen flex w-full">
         <Sidebar />
 
@@ -42,7 +44,7 @@ const Layout = ({ children }: LayoutProps) => {
           </main>
         </div>
       </div>
-    </>
+    </QueryClientProvider>
   );
 };
 

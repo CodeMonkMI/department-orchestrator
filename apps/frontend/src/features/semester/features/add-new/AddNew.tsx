@@ -2,9 +2,8 @@ import Card from "@/components/ui-elements/Card";
 import PageTitle from "@/components/ui-elements/PageTitle";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, BookPlus } from "lucide-react";
-
 import Link from "next/link";
-import CourseAddForm from "./components/coure-add-form";
+import SemesterAddForm from "./components/course-add-form";
 
 const AddNewSemesterContainer = () => {
   return (
@@ -30,7 +29,7 @@ const AddNewSemesterContainer = () => {
           <h2 className="text-xl font-semibold">Semester Information</h2>
         </div>
 
-        <CourseAddForm />
+        <SemesterAddForm />
       </Card>
     </div>
   );
