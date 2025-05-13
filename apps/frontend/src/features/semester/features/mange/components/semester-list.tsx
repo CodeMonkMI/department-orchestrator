@@ -1,12 +1,5 @@
 "use client";
 import Card from "@/components/ui-elements/Card";
-import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import {
   Table,
   TableBody,
@@ -17,7 +10,8 @@ import {
 } from "@/components/ui/table";
 import { useSemesterQuery } from "@/lib/api/semesterApi";
 import { Semester } from "@/lib/api/semesterApi/type";
-import { BookPlus, FileText, MoreHorizontal, Users } from "lucide-react";
+import { BookPlus, Users } from "lucide-react";
+import TableActionMenu from "./table-action-menu";
 
 const statusColors: Record<string, string> = {
   Active: "bg-emerald-100 text-emerald-800",
@@ -60,7 +54,7 @@ const SemesterList = () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {semesters!.slice(0, 5).map((semester: Semester) => (
+            {semesters!.map((semester: Semester) => (
               <TableRow key={semester.id}>
                 <TableCell>
                   <div className="flex items-center gap-3">
@@ -82,18 +76,7 @@ const SemesterList = () => {
                 </TableCell>
                 <TableCell>{semester.maxCourses}</TableCell>
                 <TableCell className="text-right">
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button variant="ghost" size="icon">
-                        <MoreHorizontal size={16} />
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                      <DropdownMenuItem>
-                        <FileText size={14} className="mr-2" /> Remove
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
+                  <TableActionMenu id={semester.id} />
                 </TableCell>
               </TableRow>
             ))}
