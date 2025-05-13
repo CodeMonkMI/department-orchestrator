@@ -1,5 +1,5 @@
+"use client";
 import Card from "@/components/ui-elements/Card";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -15,15 +15,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { courseData } from "@/features/course/data/course";
-import { cn } from "@/lib/utils";
-import {
-  BarChart2,
-  BookPlus,
-  FileText,
-  MoreHorizontal,
-  Users,
-} from "lucide-react";
+import { useSemesterQuery } from "@/lib/api/semesterApi";
+import { Semester } from "@/lib/api/semesterApi/type";
+import { BookPlus, FileText, MoreHorizontal, Users } from "lucide-react";
 
 const statusColors: Record<string, string> = {
   Active: "bg-emerald-100 text-emerald-800",
@@ -32,56 +26,61 @@ const statusColors: Record<string, string> = {
 };
 
 const SemesterList = () => {
+  const { data: semesters, isLoading, isError, error } = useSemesterQuery();
+
+  if (isLoading) {
+    return (
+      <div>
+        <h2>Loading....</h2>
+      </div>
+    );
+  }
+
+  if (isError) {
+    return (
+      <div>
+        <h2>Loading....</h2>
+      </div>
+    );
+  }
   return (
     <div>
       <Card className="p-6">
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-semibold">Course List</h2>
+          <h2 className="text-lg font-semibold">Semester List</h2>
         </div>
-
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Course</TableHead>
-              <TableHead>Instructor</TableHead>
-              <TableHead>Status</TableHead>
-              <TableHead>Students</TableHead>
-              <TableHead>Semester</TableHead>
+              <TableHead>Name</TableHead>
+              <TableHead>Type</TableHead>
+              <TableHead>Max Student</TableHead>
+              <TableHead>Max Courses</TableHead>
               <TableHead className="text-right">Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
-            {courseData.map((course) => (
-              <TableRow key={course.id}>
+            {semesters!.slice(0, 5).map((semester: Semester) => (
+              <TableRow key={semester.id}>
                 <TableCell>
                   <div className="flex items-center gap-3">
                     <div className="p-2 rounded-full bg-primary/10">
                       <BookPlus size={18} className="text-primary" />
                     </div>
                     <div>
-                      <div className="font-medium">{course.name}</div>
-                      <div className="text-sm text-muted-foreground">
-                        {course.code}
-                      </div>
+                      <div className="font-medium">{semester.name}</div>
                     </div>
                   </div>
                 </TableCell>
-                <TableCell>{course.instructor}</TableCell>
-                <TableCell>
-                  <Badge
-                    variant="secondary"
-                    className={cn("", statusColors[course.status])}
-                  >
-                    {course.status}
-                  </Badge>
-                </TableCell>
+                <TableCell>{semester.type}</TableCell>
+
                 <TableCell>
                   <div className="flex items-center gap-1.5">
                     <Users size={14} className="text-muted-foreground" />
-                    {course.students}
+                    {semester.maxStudents}
                   </div>
                 </TableCell>
-                <TableCell>{course.semester}</TableCell>
+                <TableCell>{semester.maxCourses}</TableCell>
                 <TableCell className="text-right">
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
@@ -91,10 +90,7 @@ const SemesterList = () => {
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
                       <DropdownMenuItem>
-                        <FileText size={14} className="mr-2" /> View Details
-                      </DropdownMenuItem>
-                      <DropdownMenuItem>
-                        <BarChart2 size={14} className="mr-2" /> View Analytics
+                        <FileText size={14} className="mr-2" /> Remove
                       </DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>

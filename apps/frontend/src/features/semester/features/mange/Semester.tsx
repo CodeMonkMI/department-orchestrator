@@ -20,7 +20,11 @@ const SemesterContainer = () => {
       </div>
 
       <div className="space-y-6">
-        <SemesterList />
+        <div className="flex justify-center">
+          <div className="w-1/2">
+            <SemesterList />
+          </div>
+        </div>
       </div>
     </div>
   );
