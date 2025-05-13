@@ -4,15 +4,15 @@ import { AxiosResponse } from "axios";
 import { axios } from "../../axios";
 import { Semester } from "./type";
 
-export const fetchPath = "/semester";
+export const fetchSemestersPath = "/semester";
 
 const fetchSemester = async (): Promise<Semester[] | undefined> => {
-  const data: AxiosResponse = await axios.get(fetchPath);
+  const data: AxiosResponse = await axios.get(fetchSemestersPath);
   return data.data;
 };
 
 export const useSemesterQuery = () =>
   useQuery({
-    queryKey: [fetchPath],
+    queryKey: [fetchSemestersPath],
     queryFn: fetchSemester,
   });

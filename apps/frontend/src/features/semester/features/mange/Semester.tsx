@@ -21,7 +21,7 @@ const SemesterContainer = () => {
 
       <div className="space-y-6">
         <div className="flex justify-center">
-          <div className="w-1/2">
+          <div className="xl:w-1/2">
             <SemesterList />
           </div>
         </div>
