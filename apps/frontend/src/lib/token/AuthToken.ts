@@ -1,8 +1,8 @@
 "use client";
 import { jwtDecode } from "jwt-decode";
-import { Token } from "./Token";
+import { LocalStorage } from "../localStorage";
 
-class AuthToken extends Token {
+class AuthToken extends LocalStorage {
   key: string = "authToken";
   decode(token: string = this.get()) {
     return jwtDecode(token);

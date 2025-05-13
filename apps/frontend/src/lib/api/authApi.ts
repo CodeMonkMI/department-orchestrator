@@ -1,8 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
+import { axios } from "../axios";
 import { authToken } from "../token/AuthToken";
-import { Axios } from "./instance";
-
-const axios = new Axios();
 
 export const authApiPath = {
   login: "/auth/login",
@@ -20,7 +18,7 @@ type LoginResponse = {
 export const login = async (
   data: Login
 ): Promise<{ data: LoginResponse } | undefined> => {
-  return axios.axiosInstance.post(authApiPath.login, data);
+  return axios.post(authApiPath.login, data);
 };
 
 export const useLogin = () =>
