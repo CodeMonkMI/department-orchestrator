@@ -26,9 +26,12 @@ const Layout = ({ children }: LayoutProps) => {
         <Sidebar />
 
         <div
-          className={cn("flex-1 min-h-screen flex flex-col ml-[80px] ", {
-            " lg:ml-[250px]": !collapsed,
-          })}
+          className={cn(
+            "flex-1 min-h-screen flex flex-col ml-[80px] transition-all duration-500",
+            {
+              " lg:ml-[250px]": !collapsed,
+            }
+          )}
         >
           <Header />
 

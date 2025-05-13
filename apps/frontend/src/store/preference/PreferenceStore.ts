@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { immer } from "zustand/middleware/immer";
+import { createJSONStorage, persist } from "zustand/middleware";
 
 type SidebarStates = {
   isOpen: boolean;
@@ -13,32 +13,42 @@ type SideBarActions = {
   toggleSidebar: () => void;
 };
 
-type Actions = {
-  sidebar: SideBarActions;
-};
+type Actions = SideBarActions;
 
 type CombineState = States & {
   actions: Actions;
 };
 
 const preferenceStore = create<CombineState>()(
-  immer((set) => ({
-    sidebar: {
-      isOpen: true,
-    },
-    actions: {
+  persist(
+    (set) => ({
       sidebar: {
+        isOpen: true,
+      },
+      actions: {
         toggleSidebar: () => {
           set((state) => {
-            state.sidebar.isOpen = !state.sidebar.isOpen;
+            return {
+              ...state,
+              sidebar: {
+                ...state.sidebar,
+                isOpen: !state.sidebar.isOpen
+              }
+            }
           });
         },
+
       },
-    },
-  }))
+    }),
+    {
+      name: "preference",
+      storage: createJSONStorage(() => localStorage),
+      partialize: (state) => ({ sidebar: state.sidebar }),
+    }
+  )
 );
 
 export const useIsSidebarOpen = () =>
   preferenceStore((state) => state.sidebar.isOpen);
-export const useSidebarActions = () =>
-  preferenceStore((state) => state.actions.sidebar);
+export const usePrefActions = () =>
+  preferenceStore((state) => state.actions);

@@ -4,16 +4,16 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
 import {
   useIsSidebarOpen,
-  useSidebarActions,
+  usePrefActions,
 } from "@/store/preference/PreferenceStore";
 import { ChevronLeft, LogOut, Menu } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { menuItems } from "../data/SidebarMenu";
+import { menuItems } from "./data/SidebarMenu";
 
 const Sidebar = () => {
   const collapsed: boolean = useIsSidebarOpen();
-  const actions = useSidebarActions();
+  const actions = usePrefActions();
 
   const pathname = usePathname();
 
@@ -24,7 +24,7 @@ const Sidebar = () => {
   return (
     <div
       className={cn(
-        "fixed top-0 left-0 h-screen bg-sidebar border-r border-sidebar-border z-40",
+        "fixed top-0 left-0 h-screen bg-sidebar border-r border-sidebar-border z-40 transition-all duration-500",
         collapsed ? "w-[80px]" : "w-[250px]"
       )}
     >
