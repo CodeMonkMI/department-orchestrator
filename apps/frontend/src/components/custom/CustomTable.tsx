@@ -13,7 +13,7 @@ import {
 } from "@tanstack/react-table";
 
 const CustomTable: React.FC<{ data: any[]; columns: any[] }> = (props) => {
-  const { columns, data } = props;
+  const { columns = [], data } = props;
   const table = useReactTable({
     data,
     columns,

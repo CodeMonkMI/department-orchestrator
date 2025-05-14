@@ -4,36 +4,12 @@ import Card from "@/components/ui-elements/Card";
 import { Button } from "@/components/ui/button";
 import { useTeacherQuery } from "@/lib/api/teacherApi";
 import { Teacher } from "@/lib/api/teacherApi/type";
-import {
-  createColumnHelper,
-  getCoreRowModel,
-  useReactTable,
-} from "@tanstack/react-table";
+import { createColumnHelper } from "@tanstack/react-table";
 import { format } from "date-fns";
 import { BookPlus, CheckCircle, Users, XCircle } from "lucide-react";
-import { useEffect, useState } from "react";
 
 export default function UsersTable() {
-  const [data, setData] = useState<Teacher[]>([]);
-  const {
-    data: teachers = [],
-    isLoading,
-    isError,
-    error,
-    isSuccess,
-  } = useTeacherQuery();
-
-  const table = useReactTable({
-    data,
-    columns,
-    getCoreRowModel: getCoreRowModel(),
-  });
-
-  useEffect(() => {
-    if (isSuccess) {
-      setData(teachers);
-    }
-  }, [isSuccess]);
+  const { data: teachers, isLoading, isError, error } = useTeacherQuery();
 
   if (isLoading) {
     return <h2>Loading...</h2>;
@@ -46,7 +22,7 @@ export default function UsersTable() {
     <div>
       <Card className="glass rounded-xl overflow-hidden">
         <div className="overflow-x-auto">
-          <CustomTable data={teachers} columns={columns} />
+          <CustomTable data={teachers || []} columns={columns} />
         </div>
 
         <div className="px-6 py-4 border-t border-slate-200 flex items-center justify-between">
