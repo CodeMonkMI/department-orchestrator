@@ -1,5 +1,117 @@
+"use client";
+import Card from "@/components/ui-elements/Card";
 import { Button } from "@/components/ui/button";
-import { CheckCircle, MoreHorizontal, XCircle } from "lucide-react";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { useTeacherQuery } from "@/lib/api/teacherApi";
+import { Teacher } from "@/lib/api/teacherApi/type";
+import {
+  createColumnHelper,
+  flexRender,
+  getCoreRowModel,
+  useReactTable,
+} from "@tanstack/react-table";
+import { format } from "date-fns";
+import { BookPlus, CheckCircle, Users, XCircle } from "lucide-react";
+import { useEffect, useState } from "react";
+
+export default function UsersTable() {
+  const [data, setData] = useState<Teacher[]>([]);
+  const {
+    data: teachers = [],
+    isLoading,
+    isError,
+    error,
+    isSuccess,
+  } = useTeacherQuery();
+
+  const table = useReactTable({
+    data,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+  });
+
+  useEffect(() => {
+    if (isSuccess) {
+      setData(teachers);
+    }
+  }, [isSuccess]);
+
+  if (isLoading) {
+    return <h2>Loading...</h2>;
+  }
+  if (isError) {
+    return <pre>{JSON.stringify(error, undefined, 2)}</pre>;
+  }
+
+  return (
+    <div>
+      <Card className="glass rounded-xl overflow-hidden">
+        <div className="overflow-x-auto">
+          <Table>
+            <TableHeader>
+              {table.getHeaderGroups().map((headerGroup) => (
+                <TableRow key={headerGroup.id}>
+                  {headerGroup.headers.map((header) => (
+                    <TableHead key={header.id}>
+                      {header.isPlaceholder
+                        ? null
+                        : flexRender(
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )}
+                    </TableHead>
+                  ))}
+                </TableRow>
+              ))}
+            </TableHeader>
+            <TableBody>
+              {table.getRowModel().rows.map((row) => (
+                <TableRow key={row.id}>
+                  {row.getVisibleCells().map((cell) => (
+                    <TableCell key={cell.id}>
+                      <div className="flex items-center gap-3">
+                        <div>
+                          <div className="font-medium">
+                            {flexRender(
+                              cell.column.columnDef.cell,
+                              cell.getContext()
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
+
+        <div className="px-6 py-4 border-t border-slate-200 flex items-center justify-between">
+          <p className="text-sm text-slate-500">
+            Showing 1 to 8 of 100 results
+          </p>
+
+          <div className="flex items-center space-x-2">
+            <Button variant="outline" size="sm" disabled>
+              Previous
+            </Button>
+            <Button variant="outline" size="sm">
+              Next
+            </Button>
+          </div>
+        </div>
+      </Card>
+    </div>
+  );
+}
 
 const roleColors: Record<string, string> = {
   "Chief Instructor": "bg-blue-100 text-blue-800",
@@ -77,134 +189,94 @@ const users = [
   },
 ];
 
-export default function UsersTable() {
-  return (
-    <div>
-      <div className="glass rounded-xl overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-slate-200">
-            <thead className="bg-slate-50">
-              <tr>
-                <th
-                  scope="col"
-                  className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider"
-                >
-                  Name
-                </th>
-                <th
-                  scope="col"
-                  className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider"
-                >
-                  Role
-                </th>
-                <th
-                  scope="col"
-                  className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider"
-                >
-                  Email
-                </th>
-                <th
-                  scope="col"
-                  className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider"
-                >
-                  Status
-                </th>
-                <th
-                  scope="col"
-                  className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider"
-                >
-                  Department
-                </th>
-                <th
-                  scope="col"
-                  className="px-6 py-3 text-right text-xs font-medium text-slate-500 uppercase tracking-wider"
-                >
-                  Actions
-                </th>
-              </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-slate-200">
-              {users.map((user, index) => (
-                <tr
-                  key={user.id}
-                  className="hover:bg-slate-50 transition-colors"
-                >
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="flex items-center">
-                      <div className="h-10 w-10 flex-shrink-0 rounded-full bg-slate-200 flex items-center justify-center">
-                        <span className="text-sm font-medium text-slate-600">
-                          {user.name
-                            .split(" ")
-                            .map((n) => n[0])
-                            .join("")}
-                        </span>
-                      </div>
-                      <div className="ml-4">
-                        <div className="text-sm font-medium text-slate-900">
-                          {user.name}
-                        </div>
-                      </div>
-                    </div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <span
-                      className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                        roleColors[user.role]
-                      }`}
-                    >
-                      {user.role}
-                    </span>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-500">
-                    {user.email}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="flex items-center text-sm">
-                      {user.status === "Active" ? (
-                        <>
-                          <CheckCircle
-                            size={16}
-                            className="text-emerald-500 mr-1.5"
-                          />
-                          <span className="text-emerald-800">Active</span>
-                        </>
-                      ) : (
-                        <>
-                          <XCircle size={16} className="text-red-500 mr-1.5" />
-                          <span className="text-red-800">Inactive</span>
-                        </>
-                      )}
-                    </div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-500">
-                    {user.department}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                    <Button variant="ghost" size="sm">
-                      <MoreHorizontal size={16} />
-                    </Button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+type Person = {
+  firstName: string;
+  lastName: string;
+  age: number;
+  visits: number;
+  status: string;
+  progress: number;
+};
+
+const columnHelper = createColumnHelper<Teacher>();
+
+const columns = [
+  columnHelper.accessor("user.fullname", {
+    cell: (row) => (
+      <div className="flex items-center gap-3">
+        <div className="p-2 rounded-full bg-primary/10">
+          <BookPlus size={18} className="text-primary" />
         </div>
+        <div>
+          <div className="font-medium">{row.getValue()}</div>
+        </div>
+      </div>
+    ),
 
-        <div className="px-6 py-4 border-t border-slate-200 flex items-center justify-between">
-          <p className="text-sm text-slate-500">
-            Showing 1 to 8 of 100 results
-          </p>
+    header: () => <span>Full Name</span>,
+  }),
+  columnHelper.accessor("user.email", {
+    cell: (row) => (
+      <div className="flex items-center gap-1.5">
+        <Users size={14} className="text-muted-foreground" />
+        {row.getValue().toLocaleLowerCase()}
+      </div>
+    ),
 
-          <div className="flex items-center space-x-2">
-            <Button variant="outline" size="sm" disabled>
-              Previous
-            </Button>
-            <Button variant="outline" size="sm">
-              Next
-            </Button>
+    header: () => <span>Email</span>,
+  }),
+  columnHelper.accessor("title", {
+    cell: (row) => (
+      <div className="flex items-center gap-3">
+        <div>
+          <div className="font-medium">{row.getValue()}</div>
+        </div>
+      </div>
+    ),
+
+    header: () => <span>Title</span>,
+  }),
+  columnHelper.accessor("joinDate", {
+    cell: (row) => (
+      <div className="flex items-center gap-3">
+        <div>
+          <div className="font-medium">
+            {format(new Date(row.getValue()), "dd MMM yyyy")}
           </div>
         </div>
       </div>
-    </div>
-  );
-}
+    ),
+
+    header: () => <span>Join Date</span>,
+  }),
+  columnHelper.accessor("officeLocation", {
+    cell: (row) => (
+      <div className="flex items-center gap-3">
+        <div>
+          <div className="font-medium">{row.getValue()}</div>
+        </div>
+      </div>
+    ),
+
+    header: () => <span>Office</span>,
+  }),
+
+  columnHelper.accessor("status", {
+    cell: (row) => (
+      <div className="flex items-center gap-3">
+        {row.getValue().toLocaleLowerCase() === "active" ? (
+          <>
+            <CheckCircle size={16} className="text-emerald-500 mr-1.5" />
+            <span className="text-emerald-800">Active</span>
+          </>
+        ) : (
+          <>
+            <XCircle size={16} className="text-red-500 mr-1.5" />
+            <span className="text-red-800">Inactive</span>
+          </>
+        )}
+      </div>
+    ),
+    header: () => <span>Status</span>,
+  }),
+];
