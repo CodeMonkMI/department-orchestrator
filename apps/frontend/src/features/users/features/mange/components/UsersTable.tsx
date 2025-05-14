@@ -1,19 +1,11 @@
 "use client";
+import CustomTable from "@/components/custom/CustomTable";
 import Card from "@/components/ui-elements/Card";
 import { Button } from "@/components/ui/button";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 import { useTeacherQuery } from "@/lib/api/teacherApi";
 import { Teacher } from "@/lib/api/teacherApi/type";
 import {
   createColumnHelper,
-  flexRender,
   getCoreRowModel,
   useReactTable,
 } from "@tanstack/react-table";
@@ -54,44 +46,7 @@ export default function UsersTable() {
     <div>
       <Card className="glass rounded-xl overflow-hidden">
         <div className="overflow-x-auto">
-          <Table>
-            <TableHeader>
-              {table.getHeaderGroups().map((headerGroup) => (
-                <TableRow key={headerGroup.id}>
-                  {headerGroup.headers.map((header) => (
-                    <TableHead key={header.id}>
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
-                    </TableHead>
-                  ))}
-                </TableRow>
-              ))}
-            </TableHeader>
-            <TableBody>
-              {table.getRowModel().rows.map((row) => (
-                <TableRow key={row.id}>
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
-                      <div className="flex items-center gap-3">
-                        <div>
-                          <div className="font-medium">
-                            {flexRender(
-                              cell.column.columnDef.cell,
-                              cell.getContext()
-                            )}
-                          </div>
-                        </div>
-                      </div>
-                    </TableCell>
-                  ))}
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+          <CustomTable data={teachers} columns={columns} />
         </div>
 
         <div className="px-6 py-4 border-t border-slate-200 flex items-center justify-between">
@@ -112,91 +67,6 @@ export default function UsersTable() {
     </div>
   );
 }
-
-const roleColors: Record<string, string> = {
-  "Chief Instructor": "bg-blue-100 text-blue-800",
-  Instructor: "bg-emerald-100 text-emerald-800",
-  "Junior Instructor": "bg-purple-100 text-purple-800",
-  "Craft Instructor": "bg-amber-100 text-amber-800",
-  Staff: "bg-slate-100 text-slate-800",
-  Student: "bg-teal-100 text-teal-800",
-};
-
-const users = [
-  {
-    id: 1,
-    name: "Dr. Michael Smith",
-    role: "Chief Instructor",
-    email: "michael.smith@example.com",
-    status: "Active",
-    department: "Computer Science",
-  },
-  {
-    id: 2,
-    name: "Prof. Emily Johnson",
-    role: "Instructor",
-    email: "emily.johnson@example.com",
-    status: "Active",
-    department: "Computer Science",
-  },
-  {
-    id: 3,
-    name: "James Wilson",
-    role: "Junior Instructor",
-    email: "james.wilson@example.com",
-    status: "Active",
-    department: "Computer Science",
-  },
-  {
-    id: 4,
-    name: "Lisa Brown",
-    role: "Craft Instructor",
-    email: "lisa.brown@example.com",
-    status: "Active",
-    department: "Computer Science",
-  },
-  {
-    id: 5,
-    name: "Robert Davis",
-    role: "Staff",
-    email: "robert.davis@example.com",
-    status: "Active",
-    department: "Computer Science",
-  },
-  {
-    id: 6,
-    name: "Sarah Martinez",
-    role: "Junior Instructor",
-    email: "sarah.martinez@example.com",
-    status: "Inactive",
-    department: "Computer Science",
-  },
-  {
-    id: 7,
-    name: "John Thompson",
-    role: "Student",
-    email: "john.thompson@example.com",
-    status: "Active",
-    department: "Computer Science",
-  },
-  {
-    id: 8,
-    name: "Angela White",
-    role: "Instructor",
-    email: "angela.white@example.com",
-    status: "Active",
-    department: "Computer Science",
-  },
-];
-
-type Person = {
-  firstName: string;
-  lastName: string;
-  age: number;
-  visits: number;
-  status: string;
-  progress: number;
-};
 
 const columnHelper = createColumnHelper<Teacher>();
 
