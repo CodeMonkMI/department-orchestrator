@@ -27,7 +27,7 @@ const CustomTable: React.FC<{ data: any[]; columns: any[] }> = (props) => {
           {table.getHeaderGroups().map((headerGroup) => (
             <TableRow key={headerGroup.id}>
               {headerGroup.headers.map((header) => (
-                <TableHead key={header.id}>
+                <TableHead key={`${header.id}${Math.random().toString()}`}>
                   {header.isPlaceholder
                     ? null
                     : flexRender(
@@ -43,15 +43,13 @@ const CustomTable: React.FC<{ data: any[]; columns: any[] }> = (props) => {
           {table.getRowModel().rows.map((row) => (
             <TableRow key={row.id}>
               {row.getVisibleCells().map((cell) => (
-                <TableCell key={cell.id}>
+                <TableCell key={`${cell.id}${Math.random().toString()}`}>
                   <div className="flex items-center gap-3">
-                    <div>
-                      <div className="font-medium">
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext()
-                        )}
-                      </div>
+                    <div className="font-medium">
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
                     </div>
                   </div>
                 </TableCell>
