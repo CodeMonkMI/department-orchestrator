@@ -6,7 +6,7 @@ enum CourseTypeEnum {
 }
 
 export class CourseSchema {
-  public static createDTO() {
+  public static get createDTO() {
     return z.object({
       code: z
         .string({ message: "code is required" })
@@ -24,11 +24,22 @@ export class CourseSchema {
         .max(200, { message: "description must be less than 200 chars" })
         .optional(),
       credits: z
-        .number({ message: "credits is required" })
+        .string({ message: "credits is required" })
         .min(1, {
           message: "credits must be greater than 0",
         })
-        .max(4, { message: "credits must be less than 4" }),
+        .max(4, { message: "credits must be less than 4" })
+        .transform((value, ctx) => {
+          const parsed = parseInt(value);
+          if (isNaN(parsed)) {
+            ctx.addIssue({
+              code: z.ZodIssueCode.custom,
+              message: "credits must be a number",
+            });
+            return z.never;
+          }
+          return parsed;
+        }),
     });
   }
 
