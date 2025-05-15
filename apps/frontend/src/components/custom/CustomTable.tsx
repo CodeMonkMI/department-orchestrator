@@ -12,12 +12,19 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 
-const CustomTable: React.FC<{ data: any[]; columns: any[] }> = (props) => {
-  const { columns = [], data } = props;
+type CustomTableProps = {
+  data: any[];
+  columns: any[];
+  meta?: { [x: string]: (...args: any[]) => any };
+};
+
+const CustomTable: React.FC<CustomTableProps> = (props) => {
+  const { columns = [], data, meta } = props;
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
+    meta: meta || {},
   });
 
   return (

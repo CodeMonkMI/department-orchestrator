@@ -1,13 +1,43 @@
 "use client";
 import CustomTable from "@/components/custom/CustomTable";
 import Card from "@/components/ui-elements/Card";
+import { Button } from "@/components/ui/button";
+import { toast } from "@/hooks/use-toast";
 import { useCourseQuery } from "@/lib/api/coureseApi";
+import { useCourseRemoveMutation } from "@/lib/api/coureseApi/removeApi";
 import { Course } from "@/lib/api/coureseApi/type";
 import { createColumnHelper } from "@tanstack/react-table";
-import { BookPlus, Users } from "lucide-react";
+import { AxiosError } from "axios";
+import { BookPlus, Trash2Icon, Users } from "lucide-react";
+import { useEffect } from "react";
 
 const CourseList = () => {
   const { data: courses, isLoading, isError, error } = useCourseQuery();
+  const {
+    mutateAsync: remove,
+    isSuccess,
+    isError: isRemoveError,
+    error: removeError,
+  } = useCourseRemoveMutation();
+
+  useEffect(() => {
+    if (isSuccess) {
+      toast({
+        title: "Course removed successfully",
+      });
+    }
+  }, [isSuccess]);
+  useEffect(() => {
+    if (isRemoveError) {
+      if (removeError instanceof AxiosError) {
+        const msg =
+          ((removeError as AxiosError).response?.data as any).message || "";
+        toast({
+          title: msg,
+        });
+      }
+    }
+  }, [isRemoveError]);
 
   if (isLoading) {
     return <h2>Loading...</h2>;
@@ -22,7 +52,13 @@ const CourseList = () => {
           <h2 className="text-lg font-semibold">Course List</h2>
         </div>
 
-        <CustomTable data={courses || []} columns={columns} />
+        <CustomTable
+          data={courses || []}
+          columns={columns}
+          meta={{
+            remove,
+          }}
+        />
       </Card>
     </div>
   );
@@ -85,6 +121,27 @@ const columns = [
     cell: (row) => (
       <div className="flex items-center gap-3">
         <span className="">{row.getValue()}</span>
+      </div>
+    ),
+    header: () => <span>Type</span>,
+  }),
+  columnHelper.accessor("id", {
+    cell: (row) => (
+      <div className="flex items-center gap-3">
+        <div>
+          <Button
+            onClick={() => {
+              console.log("click");
+              if ((row.table.options.meta as any).remove) {
+                (row.table.options.meta as any).remove(row.getValue());
+              }
+            }}
+            variant={"destructive"}
+            size={"sm"}
+          >
+            <Trash2Icon size={14} className="" />
+          </Button>
+        </div>
       </div>
     ),
     header: () => <span>Type</span>,
